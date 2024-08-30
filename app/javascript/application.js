@@ -1,9 +1,9 @@
 import "@hotwired/turbo-rails"
 import "./custom"
 import { Application } from "@hotwired/stimulus"
-import HelloController from "controllers/hello_controller"
+import ClipboardController from "controllers/clipboard_controller"
 
 const application = Application.start();
-application.register("hello", HelloController)
+application.register("clipboard", ClipboardController)
 
 window.Stimulus = application;
