@@ -5,6 +5,9 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
+    return respond_to(&:turbo_stream) if @message.save
+
+    render :new, status: :unprocessable_entity
   end
 
   private
