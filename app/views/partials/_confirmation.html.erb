@@ -1,5 +1,6 @@
 <div
   id="new_message_form"
+  data-controller="hello"
   class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md transform transition-all hover:shadow-2xl"
 >
   <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b-2">
@@ -13,7 +14,7 @@
     <button
       id="copy-link-button"
       type="button"
-      data-action="click->clipboard#copy"
+      data-action="click->hello#greet"
       class="block items-center justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
       Copy link
