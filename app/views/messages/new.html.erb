@@ -1,8 +1,27 @@
 <div
   id="new_message_form"
-  class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md transform transition-all hover:shadow-2xl"
+  class="h-screen
+        md:h-full
+        flex
+        flex-col
+        justify-start
+        gap-6
+        md:gap-8
+        md:bg-white
+        md:shadow-lg
+        rounded-lg
+        px-4
+        py-8
+        md:p-8
+        w-full
+        md:w-3/5
+        md:transform
+        md:transition-all
+        hover:shadow-2xl"
 >
-  <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 pb-2 border-indigo-200">Create a New Message</h1>
+  <h1 class="text-3xl font-bold text-gray-800 border-b-2 border-indigo-200">
+    Create a New Message
+  </h1>
 
   <%= render 'partials/form', message: @message %>
 </div>

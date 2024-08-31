@@ -1,4 +1,4 @@
-<%= form_with model: @message, local: true, class: "space-y-6" do |form| %>
+<%= form_with model: @message, local: true, class: "h-full md:h-auto" do |form| %>
   <% if @message.errors.any? %>
     <div class="bg-red-100 text-red-700 p-4 rounded mb-4 border-l-4 border-red-500">
       <ul class="list-disc list-inside">
@@ -10,14 +10,30 @@
   <% end %>
 
   <!-- Campo de contenido -->
-  <div class="relative">
+  <div class="flex flex-col min-w-full min-h-full justify-between gap-4 md:gap-6">
+    <div class="flex flex-col gap-2 md:gap-4 min-h-full">
     <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_area :content, class: "mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400 h-auto", placeholder: "Escribe tu mensaje aquí..." %>
-  </div>
-
-  <!-- Botón de submit -->
-  <div class="flex justify-end">
-    <%= form.submit "Create Message",
-                    class: "inline-flex items-center justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= form.text_area(
+      :content,
+      placeholder: "Escribe tu mensaje aquí...",
+      class: "mt-1
+              block
+              w-full
+              p-3
+              border
+              border-gray-300
+              rounded-md
+              shadow-sm
+              focus:ring-indigo-500
+              focus:border-indigo-500
+              sm:text-sm
+              placeholder-gray-400
+              h-full"
+    )%>
+    </div>
+    <div class="flex justify-end">
+      <%= form.submit "Create Message",
+                      class: "inline-flex items-center justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
   </div>
 <% end %>
