@@ -4,34 +4,15 @@ RSpec.describe Message, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:content) }
     it { should validate_numericality_of(:expiration_limit).only_integer.is_greater_than(0) }
+    it { should validate_inclusion_of(:read).in_array([true, false]) }
   end
 
   describe 'associations' do
     it { should have_many(:message_visits).dependent(:destroy) }
   end
 
-  describe '#expires_in_day?' do
-    let(:message) { Message.new(expiration_type:) }
-
-    context 'when is day' do
-      let(:expiration_type) { 2 }
-
-      it 'returns true' do
-        expect(message.expires_in_day?).to be true
-      end
-    end
-
-    context 'when is not day' do
-      let(:expiration_type) { 3 }
-
-      it 'returns true' do
-        expect(message.expires_in_day?).to be false
-      end
-    end
-  end
-
   describe '#expiration' do
-    let(:message) { Message.new(expiration_limit: 10, expiration_type: 2) }
+    let(:message) { Message.new(expiration_limit: 10, expiration_type: 'day') }
     let(:expiration) { message.expiration }
 
     it 'returns an struct' do
@@ -43,7 +24,7 @@ RSpec.describe Message, type: :model do
     end
 
     it 'returns the correct struct with limit and type' do
-      expect(expiration.type.name).to eq('day')
+      expect(expiration.type).to eq('day')
     end
   end
 
