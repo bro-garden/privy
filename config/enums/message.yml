@@ -1,0 +1,26 @@
+# config/enums/message.yml
+expiration_type:
+  - name: one_hour
+    label: "Hour"
+    id: 0
+  - name: hours
+    label: "Hours"
+    id: 1
+  - name: one_day
+    label: "Day"
+    id: 2
+  - name: days
+    label: "Days"
+    id: 3
+  - name: one_week
+    label: "Week"
+    id: 4
+  - name: weeks
+    label: "Weeks"
+    id: 5
+  - name: one_month
+    label: "Month"
+    id: 6
+  - name: months
+    label: "Months"
+    id: 7
