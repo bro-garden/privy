@@ -1,4 +1,9 @@
-<%= form_with model: @message, local: true, class: "h-screen md:h-auto flex flex-2" do |form| %>
+<%= form_with(
+  model: @message,
+  local: true,
+  data: { controller: "expiration", action: "change->expiration#updateExpirationTypeOptions" },
+  class: "h-screen md:h-auto flex flex-2"
+) do |form| %>
   <% if @message.errors.any? %>
     <div class="bg-red-100 text-red-700 p-4 rounded mb-4 border-l-4 border-red-500">
       <ul class="list-disc list-inside">
@@ -9,33 +14,103 @@
     </div>
   <% end %>
 
-  <!-- Campo de contenido -->
   <div class="flex flex-col min-w-full h-full justify-between gap-4 md:gap-6">
     <div class="flex flex-col gap-2 md:gap-4 h-full">
-    <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_area(
-      :content,
-      placeholder: "Writte here yout message...",
-      class: "mt-1
-              block
-              w-full
-              p-3
-              md:p-6
-              border
-              border-gray-300
-              rounded-md
-              shadow-sm
-              focus:ring-indigo-500
-              focus:border-indigo-500
-              text-sm
-              md:text-base
-              placeholder-gray-400
-              h-full"
-    )%>
+      <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_area(
+        :content,
+        placeholder: "Write your message here...",
+        class: "mt-1
+                block
+                w-full
+                p-3
+                md:p-6
+                border
+                border-gray-300
+                rounded-md
+                shadow-sm
+                focus:ring-indigo-500
+                focus:border-indigo-500
+                text-sm
+                md:text-base
+                placeholder-gray-400
+                h-full"
+      ) %>
     </div>
-    <div class="flex justify-end">
-      <%= form.submit "Create Message",
-                      class: "inline-flex items-center justify-center py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+
+    <div class="w-full flex flex-col gap-4">
+      <%= form.label "expires message in:", class: "block text-sm font-medium text-gray-700" %>
+
+      <div class="w-full flex justify-between">
+        <div class="flex gap-2">
+          <div
+            data-expiration-target="expirationLimit"
+          >
+            <%= form.select(
+              :expiration_limit,
+              options_for_select((1..12).to_a, @message.expiration_limit),
+              class: "mt-1
+                      block
+                      w-full
+                      p-3
+                      border
+                      border-gray-300
+                      rounded-md
+                      shadow-sm
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      text-sm
+                      md:text-base"
+            ) %>
+          </div>
+
+          <div
+            data-expiration-target="expirationType"
+          >
+            <%= form.select(
+              :expiration_type,
+              [],
+              class: "mt-1
+                      block
+                      w-full
+                      p-3
+                      border
+                      border-gray-300
+                      rounded-md
+                      shadow-sm
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      text-sm
+                      md:text-base"
+            ) %>
+          </div>
+        </div>
+
+        <%= form.submit(
+          "Create Message",
+          class: "inline-flex
+                  items-center
+                  justify-center
+                  h-10
+                  py-2
+                  px-5
+                  border
+                  border-transparent
+                  shadow-sm
+                  text-sm
+                  font-medium
+                  rounded-full
+                  text-white
+                  bg-indigo-600
+                  hover:bg-indigo-700
+                  hover:scale-105
+                  transition-transform
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-offset-2
+                  focus:ring-indigo-500"
+        ) %>
+      </div>
     </div>
   </div>
 <% end %>
