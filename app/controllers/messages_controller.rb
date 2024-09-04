@@ -7,18 +7,18 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     return respond_to(&:turbo_stream) if @message.save
 
-    render :new, status: :unprocessable_entity
+    fail_and_redirect_to_new(@message.errors.full_messages.join(', '))
   end
 
   def show
     @message = Message.find(params[:id])
-    return fail_show('Message not found') unless @message
+    return fail_and_redirect_to_new('Message not found') unless @message
 
     message_manager = Messages::Manager.new(@message)
     @content = message_manager.read_content
     return render :show if @content.present?
 
-    fail_show('Message has expired')
+    fail_and_redirect_to_new('Message has expired')
   end
 
   private
@@ -27,7 +27,7 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :expiration_limit, :expiration_type)
   end
 
-  def fail_show(message)
+  def fail_and_redirect_to_new(message)
     flash[:alert] = message
     redirect_to new_message_path
   end
