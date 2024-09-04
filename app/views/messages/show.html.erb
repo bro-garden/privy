@@ -11,19 +11,36 @@
         w-full
         md:w-3/5"
 >
-  <h1 class="text-4xl font-bold text-gray-800 border-b-2">
+  <h1 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-700 flex-1">
     Message says:
   </h1>
 
+
   <div class="w-full flex flex-col gap-4 md:gap-6">
-    <p class="text-gray-800 text-lg">
+    <p
+      class="mt-1
+              block
+              w-full
+              p-3
+              md:p-6
+              border
+              bg-gray-100
+              border-gray-300 
+              rounded-lg 
+              text-sm
+              md:text-base
+              placeholder-gray-400
+              h-full"
+    >
       <%= @message.content %>
     </p>
 
     <%= link_to(
       "Create a new message",
       root_url,
-      class: "inline-flex
+      turbo: true,
+      class: "self-start
+              inline-flex
               items-center
               justify-center
               h-10
