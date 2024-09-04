@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
 
     message_manager = Messages::Manager.new(@message)
     @content = message_manager.read_or_expires_message
-    return render :show if @content == Messages::Manager::EXPIRED
+    return render :show unless @content == Messages::Manager::EXPIRED
 
     fail_and_redirect_to_new('Message has expired')
   end
@@ -29,6 +29,6 @@ class MessagesController < ApplicationController
 
   def fail_and_redirect_to_new(message)
     flash[:alert] = message
-    redirect_to new_message_path
+    redirect_to root_path
   end
 end

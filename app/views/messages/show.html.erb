@@ -1,39 +1,33 @@
-<div class="h-screen
-        md:h-full
-        flex
-        flex-col
-        justify-start
-        gap-6
-        md:gap-8
-        px-4
-        py-8
-        md:p-8
-        w-full
-        md:w-3/5"
+<div
+  data-controller="clipboard"
+  class="h-screen
+      md:h-full
+      flex
+      flex-col
+      justify-start
+      gap-6
+      md:gap-8
+      px-4
+      py-8
+      md:p-8
+      w-full
+      md:w-3/5"
 >
   <h1 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-700 flex-1">
     Message says:
   </h1>
 
 
-  <div class="w-full flex flex-col gap-4 md:gap-6">
-    <p
-      class="mt-1
-              block
-              w-full
-              p-3
-              md:p-6
-              border
-              bg-gray-100
-              border-gray-300 
-              rounded-lg 
-              text-sm
-              md:text-base
-              placeholder-gray-400
-              h-full"
+  <div data-action="click->clipboard#selectContent"
+    class="w-full flex flex-col gap-4 md:gap-6" >
+    <input
+      data-clipboard-target="source"
+      type="text"
+      data-action="click->clipboard#selectContent"
+      value=<%= @message.content %>
+      readonly
+      class="w-full bg-gray-100 border border-gray-300 rounded-lg py-2 px-4"
     >
-      <%= @message.content %>
-    </p>
 
     <%= link_to(
       "Create a new message",

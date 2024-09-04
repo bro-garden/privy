@@ -21,4 +21,8 @@ export default class extends Controller {
         console.error('Failed to copy!', err)
       })
   }
+
+  selectContent() {
+    this.sourceTarget.select()
+  }
 }
