@@ -8,13 +8,13 @@ RSpec.describe Messages::Manager do
   let(:content) { 'Hello, World!' }
   let(:read) { false }
 
-  describe '#read_content' do
+  describe '#read_or_expires_message' do
     context 'when message is read' do
       let(:read) { true }
       let(:expiration_type) { %w[hour hours day weeks month visit].sample }
 
-      it 'returns nil' do
-        expect(subject.read_content).to eq(nil)
+      it 'returns described_class::EXPIRED' do
+        expect(subject.read_or_expires_message).to eq(described_class::EXPIRED)
       end
     end
 
@@ -25,26 +25,30 @@ RSpec.describe Messages::Manager do
         let(:created_at) { Time.current.utc - 3.days }
         before { message.update_column(:created_at, created_at) }
 
-        it 'returns nil' do
-          expect(subject.read_content).to eq(nil)
+        it 'returns described_class::EXPIRED' do
+          expect(subject.read_or_expires_message).to eq(described_class::EXPIRED)
         end
 
         it 'marks the message as read' do
-          expect { subject.read_content }.to change { message.read }.from(false).to(true)
+          expect { subject.read_or_expires_message }.to change { message.read }.from(false).to(true)
+        end
+
+        it 'clears the message content' do
+          expect { subject.read_or_expires_message }.to change { message.content }.to('')
         end
       end
 
       context 'when message has not expired' do
         it 'returns the message content' do
-          expect(subject.read_content).to eq(message.content)
+          expect(subject.read_or_expires_message).to eq(message.content)
         end
 
         it 'increments the message visits count' do
-          expect { subject.read_content }.to change { message.message_visits.count }.by(1)
+          expect { subject.read_or_expires_message }.to change { message.message_visits.count }.by(1)
         end
 
         it 'does not mark the message as read' do
-          expect { subject.read_content }.not_to(change { message.read })
+          expect { subject.read_or_expires_message }.not_to(change { message.read })
         end
       end
     end
@@ -55,26 +59,30 @@ RSpec.describe Messages::Manager do
       context 'when message has expired' do
         before { create(:message_visit, message:) }
 
-        it 'returns nil' do
-          expect(subject.read_content).to eq(nil)
+        it 'returns described_class::EXPIRED' do
+          expect(subject.read_or_expires_message).to eq(described_class::EXPIRED)
         end
 
         it 'marks the message as read' do
-          expect { subject.read_content }.to change { message.read }.from(false).to(true)
+          expect { subject.read_or_expires_message }.to change { message.read }.from(false).to(true)
+        end
+
+        it 'clears the message content' do
+          expect { subject.read_or_expires_message }.to change { message.content }.to('')
         end
       end
 
       context 'when message has not expired' do
         it 'returns the message content' do
-          expect(subject.read_content).to eq(message.content)
+          expect(subject.read_or_expires_message).to eq(message.content)
         end
 
         it 'increments the message visits count' do
-          expect { subject.read_content }.to change { message.message_visits.count }.by(1)
+          expect { subject.read_or_expires_message }.to change { message.message_visits.count }.by(1)
         end
 
         it 'does not mark the message as read' do
-          expect { subject.read_content }.not_to(change { message.read })
+          expect { subject.read_or_expires_message }.not_to(change { message.read })
         end
       end
     end

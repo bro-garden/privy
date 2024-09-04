@@ -14,21 +14,31 @@ module Messages
       visit
       visits
     ].freeze
+    EXPIRED = :expired
 
     def initialize(message)
       @message = message
     end
 
-    def read_content
-      return unless available?
+    def read_or_expires_message
+      return expires_message unless available?
 
-      MessageVisit.create(message:)
-      message.content
+      read_content
     end
 
     private
 
     attr_reader :message, :expiration
+
+    def read_content
+      MessageVisit.create(message:)
+      message.content
+    end
+
+    def expires_message
+      message.update(read: true, content: '')
+      EXPIRED
+    end
 
     def available?
       @expiration = message.expiration
@@ -43,17 +53,12 @@ module Messages
     def time_based_available?
       current_time = Time.current.utc
       expires_at = message.created_at + expiration.limit.send(expiration.type)
-      available = message.created_at <= current_time && current_time <= expires_at
-      message.update(read: true) unless available
 
-      available
+      message.created_at <= current_time && current_time <= expires_at
     end
 
     def visit_based_available?
-      available = message.message_visits.count < expiration.limit
-      message.update(read: true) unless available
-
-      available
+      message.message_visits.count < expiration.limit
     end
 
     def time_based_expiration?

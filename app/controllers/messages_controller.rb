@@ -15,8 +15,8 @@ class MessagesController < ApplicationController
     return fail_and_redirect_to_new('Message not found') unless @message
 
     message_manager = Messages::Manager.new(@message)
-    @content = message_manager.read_content
-    return render :show if @content.present?
+    @content = message_manager.read_or_expires_message
+    return render :show if @content == Messages::Manager::EXPIRED
 
     fail_and_redirect_to_new('Message has expired')
   end
