@@ -1,15 +1,15 @@
 class Message < ApplicationRecord
   enum expiration_type: {
-    hour: "0",
-    hours: "1",
-    day: "2",
-    days: "3",
-    week: "4",
-    weeks: "5",
-    month: "6",
-    months: "7",
-    visit: "8",
-    visits: "9"
+    hour: '0',
+    hours: '1',
+    day: '2',
+    days: '3',
+    week: '4',
+    weeks: '5',
+    month: '6',
+    months: '7',
+    visit: '8',
+    visits: '9'
   }
 
   before_create :set_dates
@@ -23,9 +23,7 @@ class Message < ApplicationRecord
   validates :read, inclusion: { in: [true, false] }, allow_nil: false
 
   def expiration
-    Struct.new(:limit, :type).new(
-      expiration_limit, expiration_type
-    )
+    MessageExpiration.new(expiration_limit, expiration_type)
   end
 
   private

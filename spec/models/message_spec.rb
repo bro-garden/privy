@@ -2,21 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Message, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:content) }
-    it { should validate_numericality_of(:expiration_limit).only_integer.is_greater_than(0) }
-    it { should validate_inclusion_of(:read).in_array([true, false]) }
+    it { is_expected.to validate_presence_of(:content) }
+    it { is_expected.to validate_numericality_of(:expiration_limit).only_integer.is_greater_than(0) }
+    it { is_expected.to validate_inclusion_of(:read).in_array([true, false]) }
   end
 
   describe 'associations' do
-    it { should have_many(:message_visits).dependent(:destroy) }
+    it { is_expected.to have_many(:message_visits).dependent(:destroy) }
   end
 
   describe '#expiration' do
-    let(:message) { Message.new(expiration_limit: 10, expiration_type: 'day') }
+    let(:message) { described_class.new(expiration_limit: 10, expiration_type: 'day') }
     let(:expiration) { message.expiration }
 
     it 'returns an struct' do
-      expect(expiration).to be_a(Struct)
+      expect(expiration).to be_a(MessageExpiration)
     end
 
     it 'returns the limit' do
@@ -41,7 +41,7 @@ RSpec.describe Message, type: :model do
       let(:number_of_visits) { 0 }
 
       it 'returns nil' do
-        expect(message.message_visits_count).to eq(nil)
+        expect(message.message_visits_count).to be(nil)
       end
     end
 
