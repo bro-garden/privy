@@ -1,32 +1,60 @@
-<div class="h-screen
-        md:h-full
-        flex
-        flex-col
-        justify-start
-        gap-6
-        md:gap-8
-        md:bg-white
-        md:shadow-lg
-        rounded-lg
-        px-4
-        py-8
-        md:p-8
-        w-full
-        md:w-3/5
-        md:transform
-        md:transition-all
-        hover:shadow-2xl"
+<div
+  data-controller="clipboard"
+  class="h-screen
+      md:h-full
+      flex
+      flex-col
+      justify-start
+      gap-6
+      md:gap-8
+      px-4
+      py-8
+      md:p-8
+      w-full
+      md:w-3/5"
 >
-  <h1 class="text-4xl font-bold text-gray-800 border-b-2">
+  <h1 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-700 flex-1">
     Message says:
   </h1>
 
-  <div>
-    <p class="text-gray-800 text-lg">
-      <%= @message.content %>
-    </p>
 
-    <%= link_to  "Create a new message", root_url, class: "mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
+  <div data-action="click->clipboard#selectContent"
+    class="w-full flex flex-col gap-4 md:gap-6" >
+    <input
+      data-clipboard-target="source"
+      type="text"
+      data-action="click->clipboard#selectContent"
+      value=<%= @content %>
+      readonly
+      class="w-full bg-gray-100 border border-gray-300 rounded-lg py-2 px-4"
+    >
+
+    <%= link_to(
+      "Create a new message",
+      root_url,
+      turbo: true,
+      class: "self-start
+              inline-flex
+              items-center
+              justify-center
+              h-10
+              py-2
+              px-5
+              border
+              border-transparent
+              shadow-sm
+              text-sm
+              font-medium
+              rounded-full
+              text-white
+              bg-indigo-600
+              hover:bg-indigo-700
+              hover:scale-105
+              transition-transform
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-indigo-500"
+    ) %>
   </div>
 </div>
-

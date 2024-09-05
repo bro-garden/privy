@@ -5,18 +5,22 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    return respond_to(&:turbo_stream) if @message.save
+    @message.save!
 
-    render :new, status: :unprocessable_entity
+    respond_to(&:turbo_stream)
   end
 
   def show
-    @message = Message.find(params[:id])
+    @content = Messages::Reader.new(message).read_message
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:content, :expiration_limit, :expiration_type)
+  end
+
+  def message
+    @message ||= Message.find(params[:id])
   end
 end
