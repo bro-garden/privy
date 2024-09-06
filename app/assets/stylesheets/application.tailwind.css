@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'actiontext.css';
 
 /*
 
@@ -11,4 +12,3 @@
 }
 
 */
-@import 'actiontext.css';
