@@ -92,6 +92,10 @@ GEM
     docile (1.4.1)
     dockerfile-rails (1.6.17)
       rails (>= 3.0.0)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     erubi (1.13.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
@@ -325,6 +329,7 @@ DEPENDENCIES
   byebug
   capybara
   dockerfile-rails (>= 1.6)
+  dotenv-rails
   factory_bot_rails
   faker
   guard-rspec
