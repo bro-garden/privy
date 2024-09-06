@@ -2,13 +2,13 @@
   model: @message,
   local: true,
   data: { controller: "expiration", action: "change->expiration#updateExpirationTypeOptions" },
-  class: "h-screen md:h-auto flex flex-2"
+  class: "h-screen md:h-auto flex"
 ) do |form| %>
-  <div class="flex flex-col min-w-full h-full justify-between gap-4 md:gap-6">
-    <div class="flex flex-col gap-2 md:gap-4 h-full">
+  <div class="flex flex-col min-w-full h-full justify-start gap-4 md:gap-6">
+    <div class="flex flex-col gap-2 md:gap-4">
       <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-      <%# <%= form.hidden_field :content, id: "message-content" %>
-      <%= form.text_area :content, id: "markdown-editor" %>
+      <%= form.hidden_field :content, id: "message-content" %>
+      <textarea id="markdown-editor" class="block w-full p-3 border border-gray-300 rounded-md shadow-sm"></textarea>
     </div>
 
     <div class="w-full flex flex-col gap-4">

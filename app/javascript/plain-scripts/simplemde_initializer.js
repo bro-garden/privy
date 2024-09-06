@@ -11,9 +11,9 @@ document.addEventListener("turbo:load", () => {
       toolbar: ["bold", "italic", "heading", "|", "quote", "link", "unordered-list", "ordered-list"],
     });
 
-    // const hiddenField = document.getElementById("message-content");
-    // editor.codemirror.on("change", () => {
-    //   hiddenField.value = editor.value();
-    // });
+    const hiddenField = document.getElementById("message-content");
+    editor.codemirror.on("change", () => {
+      hiddenField.value = editor.value();
+    });
   }
 });
