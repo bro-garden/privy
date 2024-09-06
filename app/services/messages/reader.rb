@@ -19,7 +19,7 @@ module Messages
     end
 
     def read_content
-      message.content
+      message.content.body
     end
 
     def check_availability!
