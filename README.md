@@ -28,3 +28,5 @@ Styles
 this project is based on tailwindcss for styles, with the [tailwindcss-rails gem](https://github.com/rails/tailwindcss-rails)
 
 run bin/rails tailwindcss:watch for live rebuilding
+
+run rails db:encryption:init
