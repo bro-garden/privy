@@ -37,3 +37,4 @@ coverage/
 .byebug_history
 .DS_Store
 .yarn/*
+.env
