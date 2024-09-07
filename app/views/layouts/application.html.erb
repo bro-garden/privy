@@ -6,9 +6,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js", defer: true %>
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css", media: "all" %>
   </head>
 
   <body>

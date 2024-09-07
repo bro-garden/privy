@@ -27,8 +27,12 @@ RSpec.describe Messages::Reader do
       context 'when message is not expired' do
         subject { reader.read_message }
 
+        it 'returns ActionText::EncryptedRichText' do
+          expect(subject).to be_a(ActionText::EncryptedRichText)
+        end
+
         it 'returns message content' do
-          expect(subject).to eq(content)
+          expect(subject.to_plain_text).to eq(content)
         end
 
         it 'creates a message visit' do
@@ -55,8 +59,12 @@ RSpec.describe Messages::Reader do
       context 'when message is not expired' do
         subject { reader.read_message }
 
+        it 'returns ActionText::EncryptedRichText' do
+          expect(subject).to be_a(ActionText::EncryptedRichText)
+        end
+
         it 'returns message content' do
-          expect(subject).to eq(content)
+          expect(subject.to_plain_text).to eq(content)
         end
 
         it 'creates a message visit' do

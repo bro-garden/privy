@@ -17,7 +17,8 @@ class Message < ApplicationRecord
 
   has_many :message_visits, dependent: :destroy
 
-  validates :content, presence: true
+  has_rich_text :content, encrypted: true
+
   validates :expiration_limit, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :expiration_type, presence: true
   validates :read, inclusion: { in: [true, false] }, allow_nil: false
