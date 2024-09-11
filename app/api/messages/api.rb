@@ -13,5 +13,6 @@ module Messages
     format :json
     formatter :json, Grape::Formatter::Jbuilder
     mount Ping
+    mount Post
   end
 end
