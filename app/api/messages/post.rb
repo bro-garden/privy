@@ -17,6 +17,8 @@ module Messages
     post '', jbuilder: 'messages/create' do
       @message = Message.new(params[:message])
       @message.save!
+    rescue ActiveRecord::RecordInvalid
+      return error!(@message.errors.full_messages, 422)
     end
   end
 end
