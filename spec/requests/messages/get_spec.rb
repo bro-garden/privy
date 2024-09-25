@@ -1,4 +1,3 @@
-# spec/requests/messages_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Messages API', type: :request do
