@@ -1,4 +1,4 @@
-module Messages
+module TempMessages
   class Ping < Grape::API
     desc 'Returns pong.'
     get :ping do
