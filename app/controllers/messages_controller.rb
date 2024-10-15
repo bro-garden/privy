@@ -4,6 +4,8 @@ class MessagesController < ApplicationController
   end
 
   def create
+    raise Messages::ContentBlankError, nil if message_params[:content].blank?
+
     @message = Message.new(message_params)
     @message.save!
 
