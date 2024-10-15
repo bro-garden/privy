@@ -2,8 +2,8 @@ module TempMessages
   module Messages
     class API < Grape::API
       prefix '/messages'
-      mount Post
-      mount Get
+      mount Create
+      mount Show
     end
   end
 end

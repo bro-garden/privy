@@ -1,6 +1,6 @@
 module TempMessages
   module Messages
-    class Post < Grape::API
+    class Create < Grape::API
       desc 'Creates a spline that can be reticulated.'
       params do
         requires :message, type: Hash do

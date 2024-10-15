@@ -1,6 +1,6 @@
 module TempMessages
   module Messages
-    class Get < Grape::API
+    class Show < Grape::API
       desc 'Returns a message by id.'
       params do
         requires :id, type: Integer, desc: 'ID of the message.'
