@@ -1,9 +1,8 @@
-module TempMessages
+module TempMessage
   class API < Grape::API
-    prefix '/temp-messages'
     format :json
     formatter :json, Grape::Formatter::Jbuilder
-    mount Messages::API => prefix
+    mount Messages::API
     mount Ping
   end
 end

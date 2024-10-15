@@ -1,8 +1,8 @@
-module TempMessages
+module TempMessage
   class Ping < Grape::API
     desc 'Returns pong.'
     get :ping do
-      { ping: params[:pong] || 'pong' }
+      { ping: 'pong' }
     end
   end
 end

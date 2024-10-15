@@ -1,4 +1,4 @@
-module TempMessages
+module TempMessage
   module Messages
     class Create < Grape::API
       desc 'Creates a spline that can be reticulated.'
@@ -11,12 +11,14 @@ module TempMessages
           requires :expiration_type,
                    type: String,
                    desc: 'Type of expiration.',
-                   values: %w[hour hours day days week weeks month months visit visits]
+                   values: ::Message.expiration_types.keys
         end
       end
 
       post '', jbuilder: 'messages/create' do
-        @message = ::Message.new(params[:message])
+        message_params = declared(params, include_missing: false)[:message]
+
+        @message = ::Message.new(message_params)
         @message.save!
       rescue ActiveRecord::RecordInvalid
         return error!(@message.errors.full_messages, 422)

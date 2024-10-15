@@ -1,4 +1,4 @@
-module TempMessages
+module TempMessage
   module Messages
     class Show < Grape::API
       desc 'Returns a message by id.'
