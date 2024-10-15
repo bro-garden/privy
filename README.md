@@ -1,32 +1,92 @@
-# README
+# Temp Messages
+**Temp Messages** is a web application built with [**Ruby on Rails 7**](https://guides.rubyonrails.org/) and [**Turbo**](https://turbo.hotwired.dev/), dedicated to creating and sharing temporary messages to which an expiration date or a visit limit can be assigned.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Prerequisites
+**Ruby 3.1.2**: Use `rbenv` to install and manage the Ruby version:
 
-Things you may want to cover:
+```bash
+rbenv install 3.1.2
+rbenv local 3.1.2
+```
 
-* Ruby version
+PostgreSQL: If you're on a Mac with Apple Silicon, install PostgreSQL by following these steps:
 
-* System dependencies
+Install Homebrew if you don't have it yet:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-* Configuration
+Install PostgreSQL:
+```bash
+brew install postgresql
+```
 
-* Database creation
+Start PostgreSQL:
+```bash
+brew services start postgresql
+Verifica que PostgreSQL esté funcionando:
+```
 
-* Database initialization
+Verify that PostgreSQL is running:
+```bash
+psql postgres
+```
 
-* How to run the test suite
+## Setup
+Clone this repository and navigate to the project directory:
+```bash
+git clone https://github.com/tu-usuario/temp-messages.git
+cd temp-messages
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Install the dependencies:
+```bash
+bundle install
+yarn install
+```
 
-* Deployment instructions
+Set up environment variables: This project uses dotenv-rails. Rename the .env.example file to .env and ensure to fill in the necessary variables. Remember to run the following command to initialize the database encryption, and then add the resulting values to your .env file:
+```bash
+rails db:encryption:init
+```
 
-* ...
+## Database
+Create the database and load the schema:
+```bash
+bundle exec rails db:create
+bundle exec rails db:schema:load
+```
 
+## Styles
+This project uses TailwindCSS for styling. To compile styles in real time, run:
+```bash
+bin/rails tailwindcss:watch
+```
 
-Styles
-this project is based on tailwindcss for styles, with the [tailwindcss-rails gem](https://github.com/rails/tailwindcss-rails)
+## Tests
+The project is configured with RSpec to run tests. It also uses Shoulda Matchers to facilitate unit testing.
 
-run bin/rails tailwindcss:watch for live rebuilding
+To run the test suite, use one of the following commands:
 
-run rails db:encryption:init
+Run all tests:
+```bash
+bundle exec rspec
+```
+
+Run the test watcher to automatically run unit tests when changes are detected:
+```bash
+bundle exec guard
+```
+
+## Running the application locally
+To start the application in your local environment, follow these steps:
+
+Start the Rails development server:
+```bash
+rails s
+```
+
+In a separate terminal tab, run the TailwindCSS watcher for real-time style compilation:
+```bash
+rails tailwindcss:watch
+```
