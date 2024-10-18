@@ -1,4 +1,4 @@
-# Temp Messages
+# privy
 **Temp Messages** is a web application built with [**Ruby on Rails 7**](https://guides.rubyonrails.org/) and [**Turbo**](https://turbo.hotwired.dev/), dedicated to creating and sharing temporary messages to which an expiration date or a visit limit can be assigned.
 
 ## Prerequisites
@@ -35,8 +35,8 @@ psql postgres
 ## Setup
 Clone this repository and navigate to the project directory:
 ```bash
-git clone https://github.com/tu-usuario/temp-messages.git
-cd temp-messages
+git clone git@github.com:bro-garden/privy.git
+cd privy
 ```
 
 Install the dependencies:
