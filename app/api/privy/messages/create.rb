@@ -1,4 +1,4 @@
-module TempMessage
+module Privy
   module Messages
     class Create < Grape::API
       desc 'Creates a spline that can be reticulated.'

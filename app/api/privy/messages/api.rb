@@ -1,4 +1,4 @@
-module TempMessage
+module Privy
   module Messages
     class API < Grape::API
       prefix '/messages'

@@ -1,4 +1,4 @@
-module TempMessage
+module Privy
   class API < Grape::API
     format :json
     formatter :json, Grape::Formatter::Jbuilder
