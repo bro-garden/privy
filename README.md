@@ -45,6 +45,11 @@ bundle install
 yarn install
 ```
 
+This Project uses teh rbnacl gem, and requires libsodium on mac:
+```bash
+brew install libsodium
+```
+
 Set up environment variables: This project uses dotenv-rails. Rename the .env.example file to .env and ensure to fill in the necessary variables. Remember to run the following command to initialize the database encryption, and then add the resulting values to your .env file:
 ```bash
 rails db:encryption:init
@@ -89,4 +94,17 @@ rails s
 In a separate terminal tab, run the TailwindCSS watcher for real-time style compilation:
 ```bash
 rails tailwindcss:watch
+```
+
+To test Discord interactions, you will need to expose your local server using a tool like Ngrok. If you're using Ngrok, run this command (assuming your app runs on port 3000):
+```bash
+ngrok http 3000
+```
+
+Then, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/discord/interactions`: one with a `200` status code response and another with a `401`
+
+### list api endpoints
+Grape is somewhat unique; if you run rails routes, it won’t show the Grape API routes. You can use a rake task to list them:
+```bash
+bundle exec rake api_routes
 ```
