@@ -102,9 +102,13 @@ ngrok http 3000
 ```
 
 Then, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/discord/interactions`: one with a `200` status code response and another with a `401`
+<img width="979" alt="image" src="https://github.com/user-attachments/assets/de7df0f3-478b-4507-8722-b9550820caa2">
 
-### list api endpoints
+
+### listing api endpoints
 Grape is somewhat unique; if you run rails routes, it won’t show the Grape API routes. You can use a rake task to list them:
 ```bash
 bundle exec rake api_routes
 ```
+<img width="441" alt="image" src="https://github.com/user-attachments/assets/8de3688e-ebca-45ea-82fb-815a3410525d">
+
