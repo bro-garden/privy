@@ -9,6 +9,7 @@ require 'rspec/rails'
 
 require 'support/shoulda_matchers'
 require 'support/capybara'
+Dir[Rails.root.join('spec/support/fixtures/**/*.rb')].sort.each { |file| require file }
 require 'simplecov'
 
 SimpleCov.start 'rails'
