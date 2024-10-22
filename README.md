@@ -1,7 +1,14 @@
 # privy
 **Temp Messages** is a web application built with [**Ruby on Rails 7**](https://guides.rubyonrails.org/) and [**Turbo**](https://turbo.hotwired.dev/), dedicated to creating and sharing temporary messages to which an expiration date or a visit limit can be assigned.
 
-## Prerequisites
+- [privy](#privy)
+  - [Getting Started](#getting-started)
+    - [Installation Prerequisites](#installation-prerequisites)
+  - [Technical Docs Reference](#technical-docs-reference)
+    - [Dev Guides \& Tooling](#dev-guides--tooling)
+
+## Getting Started
+### Installation Prerequisites
 **Ruby 3.1.2**: Use `rbenv` to install and manage the Ruby version:
 
 ```bash
@@ -91,24 +98,16 @@ Start the Rails development server:
 rails s
 ```
 
-In a separate terminal tab, run the TailwindCSS watcher for real-time style compilation:
+*to run the web version and/or make changes on it:* In a separate terminal tab, run the TailwindCSS watcher for real-time style compilation:
 ```bash
 rails tailwindcss:watch
 ```
 
-To test Discord interactions, you will need to expose your local server using a tool like Ngrok. If you're using Ngrok, run this command (assuming your app runs on port 3000):
-```bash
-ngrok http 3000
-```
-
-Then, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/discord/interactions`: one with a `200` status code response and another with a `401`
-<img width="979" alt="image" src="https://github.com/user-attachments/assets/de7df0f3-478b-4507-8722-b9550820caa2">
+*to try Discord integration* you need to connect Discord, you can follow [Integrations](./app/integrations/README.md#connect-to-your-local-deploy)
 
 
-### listing api endpoints
-Grape is somewhat unique; if you run rails routes, it won’t show the Grape API routes. You can use a rake task to list them:
-```bash
-bundle exec rake api_routes
-```
-<img width="441" alt="image" src="https://github.com/user-attachments/assets/8de3688e-ebca-45ea-82fb-815a3410525d">
+## Technical Docs Reference
+### Dev Guides & Tooling
 
+- [Integrations](./app/integrations/README.md)
+- [Rake Tasks](./lib/tasks/README.md)
