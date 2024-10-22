@@ -19,9 +19,9 @@ RSpec.describe 'Messages API', type: :request do
         expect(response).to have_http_status(201)
       end
 
-      it "returns a message's url" do
+      it "returns a message's id" do
         post('/api/messages', params:)
-        expect(JSON.parse(response.body)['url']).not_to be_empty
+        expect(JSON.parse(response.body)['id']).to be_present
       end
 
       context 'when there are extra parameter' do
@@ -38,9 +38,9 @@ RSpec.describe 'Messages API', type: :request do
           expect(response).to have_http_status(201)
         end
 
-        it "returns a message's url" do
+        it "returns a message's id" do
           post('/api/messages', params:)
-          expect(JSON.parse(response.body)['url']).not_to be_empty
+          expect(JSON.parse(response.body)['id']).to be_present
         end
       end
     end
