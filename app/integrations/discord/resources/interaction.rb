@@ -2,7 +2,6 @@ module Discord
   module Resources
     class Interaction
       PING_TYPE = 1
-      PONG_TYPE = 1
       APPLICATION_COMMAND_TYPE = 2
       MESSAGE_COMPONENT_TYPE = 3
 

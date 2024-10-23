@@ -41,7 +41,7 @@ RSpec.describe 'Discord integration interactions endpoint', type: :request do
 
       it 'returns pong type in response' do
         post(endpoint, params:, headers: right_headers)
-        expect(JSON.parse(response.body)['type']).to eq(Discord::Resources::Interaction::PONG_TYPE)
+        expect(JSON.parse(response.body)['type']).to eq(Discord::Interactions::Callbacks::Callback::PONG_TYPE)
       end
     end
 

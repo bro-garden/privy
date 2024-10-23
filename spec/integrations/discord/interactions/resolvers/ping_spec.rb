@@ -25,13 +25,13 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
     context 'when signature is valid' do
       let(:validation_return) { true }
 
-      it 'returns response type' do
-        expect(resolver.call).to eq(Discord::Resources::Interaction::PONG_TYPE)
+      it 'returns a pong callback' do
+        expect(resolver.call).to be_instance_of(Discord::Interactions::Callbacks::Pong)
       end
 
       context 'when global_name belongs to Discord' do
-        it "change the 'type' attribute" do
-          expect { resolver.call }.to change(resolver, :type)
+        it "change the 'callback' attribute" do
+          expect { resolver.call }.to change(resolver, :callback).from(nil).to(Discord::Interactions::Callbacks::Pong)
         end
       end
 

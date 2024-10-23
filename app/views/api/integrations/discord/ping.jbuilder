@@ -1,1 +1,1 @@
-json.type @resolver.type
+json.type @resolver.callback.type
