@@ -10,5 +10,3 @@ Grape is somewhat unique; if you run `rails routes`, it won’t show the Grape A
 ```bash
 bundle exec rake api_routes
 ```
-
-<img width="441" alt="image" src="https://github.com/user-attachments/assets/8de3688e-ebca-45ea-82fb-815a3410525d">

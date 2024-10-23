@@ -34,4 +34,4 @@ ngrok http 3000
 
 Next, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/integrations/discord/interactions`: one with a `200` status code response and another with a `401`.
 
-<img width="979" alt="image" src="https://github.com/user-attachments/assets/de7df0f3-478b-4507-8722-b9550820caa2">
+![Dashboard URL Box](./docs/interactions_url_box_at_dashboard.jpg)
