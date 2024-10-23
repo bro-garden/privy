@@ -6,7 +6,7 @@ module Discord
           def find(interaction:, **args)
             return Resolvers::Ping.new(**args) if interaction.ping_type?
 
-            raise Integrations::Discord::ResolverNotFoundError, interaction
+            raise ResolverNotFound, interaction
           end
         end
 
@@ -24,7 +24,7 @@ module Discord
         end
 
         def call
-          raise Integrations::Discord::InvalidSignatureHeaderError unless valid_signature?
+          raise InvalidSignatureHeader unless valid_signature?
 
           execute_action
         end

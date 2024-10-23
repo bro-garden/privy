@@ -32,9 +32,8 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
 
     context 'when type is not supported' do
       let(:type) { 20 }
-
       it 'raises an Integrations::Discord::ResolverNotFoundError' do
-        expect { resolver }.to raise_error(Integrations::Discord::ResolverNotFoundError)
+        expect { resolver }.to raise_error(Discord::ResolverNotFound)
       end
     end
   end
@@ -54,8 +53,8 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
     context 'when signature is not valid' do
       let(:headers) { wrong_headers }
 
-      it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
-        expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
+      it 'raises Discord::InvalidSignatureHeader' do
+        expect { resolver.call }.to raise_error(Discord::InvalidSignatureHeader)
       end
     end
   end

@@ -43,10 +43,10 @@ module Privy
           template = "integrations/discord/#{@resolver.name}"
           env['api.tilt.template'] = template
           status :ok
-        rescue ::Integrations::Discord::InvalidSignatureHeaderError
+        rescue ::Discord::InvalidSignatureHeader, ::Discord::InvalidGlobalName
           status :unauthorized
           { error: 'unauthorized request' }
-        rescue ::Integrations::Discord::ResolverNotFoundError => e
+        rescue ::Discord::ResolverNotFound => e
           status :bad_request
           { error: e.message }
         end

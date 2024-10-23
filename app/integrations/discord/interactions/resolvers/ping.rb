@@ -7,9 +7,9 @@ module Discord
         private
 
         def execute_action
-          raise Integrations::Discord::InvalidSignatureHeaderError unless correct_global_name?
+          raise InvalidGlobalName, user unless correct_global_name?
 
-          @callback = Discord::Interactions::Callbacks::Callback.create_pong
+          @callback = Resources::InteractionCallback.pong
         end
 
         def correct_global_name?

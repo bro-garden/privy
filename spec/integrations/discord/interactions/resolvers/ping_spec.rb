@@ -26,20 +26,20 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
       let(:validation_return) { true }
 
       it 'returns a pong callback' do
-        expect(resolver.call).to be_instance_of(Discord::Interactions::Callbacks::Pong)
+        expect(resolver.call).to be_instance_of(Discord::Resources::InteractionCallback)
       end
 
       context 'when global_name belongs to Discord' do
         it "change the 'callback' attribute" do
-          expect { resolver.call }.to change(resolver, :callback).from(nil).to(Discord::Interactions::Callbacks::Pong)
+          expect { resolver.call }.to change(resolver, :callback).from(nil).to(Discord::Resources::InteractionCallback)
         end
       end
 
       context 'when global_name is not Discord' do
         let(:global_name) { 'not-discord' }
 
-        it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
-          expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
+        it 'raises Discord::InvalidSignatureHeader' do
+          expect { resolver.call }.to raise_error(Discord::InvalidGlobalName)
         end
       end
     end
@@ -47,8 +47,8 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
     context 'when signature is not valid' do
       let(:validation_return) { false }
 
-      it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
-        expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
+      it 'raises Discord::InvalidSignatureHeader' do
+        expect { resolver.call }.to raise_error(Discord::InvalidSignatureHeader)
       end
     end
   end
