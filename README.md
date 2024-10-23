@@ -5,6 +5,8 @@
 - [privy](#privy)
   - [Getting Started](#getting-started)
     - [Installation Prerequisites](#installation-prerequisites)
+    - [Setup](#setup)
+  - [Tests](#tests)
   - [Technical Docs Reference](#technical-docs-reference)
     - [Dev Guides \& Tooling](#dev-guides--tooling)
 
@@ -46,7 +48,13 @@ Verify that PostgreSQL is running:
 psql postgres
 ```
 
-## Setup
+This Project uses the rbnacl gem, which a Ruby wrapper for the libsodium library. Libsodium is a popular cryptographic library that provides a wide range of cryptographic primitives. You can install Libsodium using homebrew:
+
+```bash
+brew install libsodium
+```
+
+### Setup
 
 Clone this repository and navigate to the project directory:
 
@@ -62,20 +70,9 @@ bundle install
 yarn install
 ```
 
-This Project uses teh rbnacl gem, and requires libsodium on mac:
+Ask for Rails credentials keys.
 
-```bash
-brew install libsodium
-```
-
-Set up environment variables: This project uses dotenv-rails. Rename the .env.example file to .env and ensure to fill in the necessary variables. Remember to run the following command to initialize the database encryption, and then add the resulting values to your .env file:
-
-```bash
-rails db:encryption:init
-```
-
-## Database
-
+**Database**
 Create the database and load the schema:
 
 ```bash
@@ -83,8 +80,7 @@ bundle exec rails db:create
 bundle exec rails db:schema:load
 ```
 
-## Styles
-
+**Styles**
 This project uses TailwindCSS for styling. To compile styles in real time, run:
 
 ```bash
