@@ -7,7 +7,7 @@ module Discord
         private
 
         def execute_action
-          raise Integrations::Discord::UnauthorizedRequestError unless correct_global_name?
+          raise Integrations::Discord::InvalidSignatureHeaderError unless correct_global_name?
 
           @type = Discord::Resources::Interaction::PONG_TYPE
         end

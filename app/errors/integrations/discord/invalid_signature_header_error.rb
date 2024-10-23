@@ -1,10 +1,10 @@
 module Integrations
   module Discord
-    class UnauthorizedRequestError < StandardError
+    class InvalidSignatureHeaderError < StandardError
       attr_reader :record
 
       def initialize
-        super('Unauthorized request')
+        super('Signature header is invalid')
       end
     end
   end

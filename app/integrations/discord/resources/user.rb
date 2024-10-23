@@ -1,7 +1,7 @@
 module Discord
   module Resources
     class User
-      EXPECTED_DISCORD_GLOBAL_NAME = 'Discord'.freeze
+      DISCORD_GLOBAL_NAME = 'Discord'.freeze
 
       attr_reader :id, :global_name, :username
 
@@ -12,7 +12,7 @@ module Discord
       end
 
       def discord?
-        global_name == EXPECTED_DISCORD_GLOBAL_NAME
+        global_name == DISCORD_GLOBAL_NAME
       end
     end
   end

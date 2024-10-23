@@ -24,13 +24,13 @@ module Discord
         end
 
         def call
-          return execute_action if valid_signature?
+          raise Integrations::Discord::InvalidSignatureHeaderError unless valid_signature?
 
-          raise Integrations::Discord::UnauthorizedRequestError
+          execute_action
         end
 
         def name
-          self.class.name.split('::').last.gsub(/([a-z])([A-Z])/, '\1_\2').downcase
+          self.class.name.split('::').last.underscore
         end
 
         private
@@ -42,24 +42,21 @@ module Discord
         end
 
         def valid_signature?
-          signature = headers_signature
-          message = headers_signature_timestamp + raw_body
+          message = signature_timestamp + raw_body
           public_key = RbNaCl::PublicKey.new([PUBLIC_KEY].pack('H*'))
 
-          begin
-            verify_key = RbNaCl::VerifyKey.new(public_key)
-            verify_key.verify([signature].pack('H*'), message)
-            true
-          rescue RbNaCl::BadSignatureError
-            false
-          end
+          verify_key = RbNaCl::VerifyKey.new(public_key)
+          verify_key.verify([signature].pack('H*'), message)
+          true
+        rescue RbNaCl::BadSignatureError
+          false
         end
 
-        def headers_signature
+        def signature
           headers['x-signature-ed25519']
         end
 
-        def headers_signature_timestamp
+        def signature_timestamp
           headers['x-signature-timestamp']
         end
       end

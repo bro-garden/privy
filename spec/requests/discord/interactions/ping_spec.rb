@@ -5,7 +5,7 @@ RSpec.describe 'Discord integration interactions endpoint', type: :request do
   include_context 'with wrong request headers'
   include_context 'with request body for right headers'
 
-  let(:global_name) { Discord::Resources::User::EXPECTED_DISCORD_GLOBAL_NAME }
+  let(:global_name) { Discord::Resources::User::DISCORD_GLOBAL_NAME }
   let(:endpoint) { '/api/discord/interactions' }
   let(:params) do
     {

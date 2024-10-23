@@ -54,8 +54,8 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
     context 'when signature is not valid' do
       let(:headers) { wrong_headers }
 
-      it 'raises Integrations::Discord::UnauthorizedRequestError' do
-        expect { resolver.call }.to raise_error(Integrations::Discord::UnauthorizedRequestError)
+      it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
+        expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
       end
     end
   end

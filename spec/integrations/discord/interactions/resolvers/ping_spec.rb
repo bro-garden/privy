@@ -38,8 +38,8 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
       context 'when global_name is not Discord' do
         let(:global_name) { 'not-discord' }
 
-        it 'raises Integrations::Discord::UnauthorizedRequestError' do
-          expect { resolver.call }.to raise_error(Integrations::Discord::UnauthorizedRequestError)
+        it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
+          expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
         end
       end
     end
@@ -47,8 +47,8 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
     context 'when signature is not valid' do
       let(:validation_return) { false }
 
-      it 'raises Integrations::Discord::UnauthorizedRequestError' do
-        expect { resolver.call }.to raise_error(Integrations::Discord::UnauthorizedRequestError)
+      it 'raises Integrations::Discord::InvalidSignatureHeaderError' do
+        expect { resolver.call }.to raise_error(Integrations::Discord::InvalidSignatureHeaderError)
       end
     end
   end

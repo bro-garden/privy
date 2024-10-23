@@ -5,8 +5,11 @@ module Privy
         desc 'Receive interactions from Bot'
         helpers do
           def user
-            @user ||= ::Discord::Resources::User.new(id: params[:user][:id], global_name: params[:user][:global_name],
-                                                     username: params[:user][:username])
+            @user ||= ::Discord::Resources::User.new(
+              id: params[:user][:id],
+              global_name: params[:user][:global_name],
+              username: params[:user][:username]
+            )
           end
 
           def application
@@ -40,7 +43,7 @@ module Privy
           template = "integrations/discord/#{@resolver.name}"
           env['api.tilt.template'] = template
           status :ok
-        rescue ::Integrations::Discord::UnauthorizedRequestError
+        rescue ::Integrations::Discord::InvalidSignatureHeaderError
           status :unauthorized
           { error: 'unauthorized request' }
         rescue ::Integrations::Discord::ResolverNotFoundError => e
