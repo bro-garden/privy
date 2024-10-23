@@ -6,7 +6,7 @@ RSpec.describe 'Discord integration interactions endpoint', type: :request do
   include_context 'with request body for right headers'
 
   let(:global_name) { Discord::Resources::User::DISCORD_GLOBAL_NAME }
-  let(:endpoint) { '/api/discord/interactions' }
+  let(:endpoint) { '/api/integrations/discord/interactions' }
   let(:params) do
     {
       'app_permissions' => '562949953601536',
@@ -32,7 +32,7 @@ RSpec.describe 'Discord integration interactions endpoint', type: :request do
 
   it_behaves_like 'unauthorizable request'
 
-  describe 'POST /api/discord/interactions Ping' do
+  describe 'POST /api/integrations/discord/interactions Ping' do
     context 'when the request is valid' do
       it 'returns a 200 status code' do
         post(endpoint, params:, headers: right_headers)

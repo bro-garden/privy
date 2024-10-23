@@ -24,7 +24,7 @@ Once your application is set up in Discord's dashboard, you'll need to add some 
 
 ### Connect To Your Local Deploy
 
-Every action the end user takes with Privy on Discord will trigger a request to an endpoint we must provide. This endpoint receives a POST request with a structure defined by Discord. We've set up the `/api/discord/interactions` endpoint.
+Every action the end user takes with Privy on Discord will trigger a request to an endpoint we must provide. This endpoint receives a POST request with a structure defined by Discord. We've set up the `/api/integrations/discord/interactions` endpoint.
 
 To connect Discord, you'll need to expose your local server using a tool like Ngrok. If you're using Ngrok, run this command (assuming your app runs on port 3000):
 
@@ -32,6 +32,6 @@ To connect Discord, you'll need to expose your local server using a tool like Ng
 ngrok http 3000
 ```
 
-Next, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/discord/interactions`: one with a `200` status code response and another with a `401`.
+Next, paste the HTTPS link into the application's Discord dashboard. You should see two requests pointing to `/api/integrations/discord/interactions`: one with a `200` status code response and another with a `401`.
 
 <img width="979" alt="image" src="https://github.com/user-attachments/assets/de7df0f3-478b-4507-8722-b9550820caa2">
