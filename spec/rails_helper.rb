@@ -11,6 +11,8 @@ require 'support/shoulda_matchers'
 require 'support/capybara'
 require 'simplecov'
 
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
+
 SimpleCov.start 'rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

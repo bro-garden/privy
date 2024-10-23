@@ -93,3 +93,6 @@ gem 'dockerfile-rails', '>= 1.6', :group => :development
 gem 'redcarpet', '~> 3.6'
 
 gem "aws-sdk-s3", "~> 1.160", :require => false
+
+# rbnacl is being used for decryption and encryption in header signature validation
+gem "rbnacl", "~> 7.1"

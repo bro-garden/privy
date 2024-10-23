@@ -3,6 +3,7 @@ module Privy
     format :json
     formatter :json, Grape::Formatter::Jbuilder
     mount Messages::API
+    mount Integrations::API => '/integrations'
     mount Ping
   end
 end

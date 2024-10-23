@@ -22,5 +22,9 @@ module Privy
     config.middleware.use(Rack::Config) do |env|
       env['api.tilt.root'] = Rails.root.join 'app/views/api'
     end
+    active_record_encryption = Rails.application.credentials.active_record
+    config.active_record.encryption.primary_key = active_record_encryption.primary_key
+    config.active_record.encryption.deterministic_key = active_record_encryption.deterministic_key
+    config.active_record.encryption.key_derivation_salt = active_record_encryption.key_derivation_salt
   end
 end
