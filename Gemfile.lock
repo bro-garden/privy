@@ -235,7 +235,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (6.0.1)
-    puma (5.6.8)
+    puma (5.6.9)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.9)
@@ -403,7 +403,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   pg (~> 1.1)
-  puma (~> 5.0)
+  puma (~> 5.6)
   rails (~> 7.0.8, >= 7.0.8.3)
   rbnacl (~> 7.1)
   redcarpet (~> 3.6)
