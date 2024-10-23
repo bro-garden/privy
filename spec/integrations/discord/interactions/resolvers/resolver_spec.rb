@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Discord::Interactions::Resolvers::Resolver do
-  include_context 'with right request headers'
-  include_context 'with wrong request headers'
   include_context 'with dummy interaction request'
-  include_context 'with raw body'
   include_context 'with resolver params'
+  include_context 'with mocked validation'
 
-  let(:headers) { right_headers }
   let(:interaction) { build(:interaction, type:) }
+  let(:raw_body) {{}}
 
   describe '.find' do
     subject(:resolver) do
@@ -32,6 +30,7 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
 
     context 'when type is not supported' do
       let(:type) { 20 }
+
       it 'raises an Integrations::Discord::ResolverNotFoundError' do
         expect { resolver }.to raise_error(Discord::ResolverNotFound)
       end
@@ -42,7 +41,7 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
     subject(:resolver) { described_class.new(request:, raw_body:, application:, guild:, user:) }
 
     context 'when signature is valid' do
-      let(:headers) { right_headers }
+      let(:validation_result) { true }
 
       it 'calls execute_action private method' do
         expect_any_instance_of(described_class).to receive(:execute_action)
@@ -51,7 +50,7 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
     end
 
     context 'when signature is not valid' do
-      let(:headers) { wrong_headers }
+      let(:validation_result) { false }
 
       it 'raises Discord::InvalidSignatureHeader' do
         expect { resolver.call }.to raise_error(Discord::InvalidSignatureHeader)

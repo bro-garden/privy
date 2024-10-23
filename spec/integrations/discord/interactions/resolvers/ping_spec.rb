@@ -6,10 +6,10 @@ RSpec.describe Discord::Interactions::Resolvers::Ping do
   end
 
   include_context 'with dummy interaction request'
-  include_context 'with raw body'
   include_context 'with resolver params'
 
   let(:interaction) { build(:interaction, type: 1) }
+  let(:raw_body) {{}}
 
   describe '#name' do
     it "returns 'ping'" do
