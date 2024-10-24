@@ -16,7 +16,7 @@ module Discord
       end
 
       def application_command_type?
-        type == APPLICATION_COMAND_TYPE
+        type == APPLICATION_COMMAND_TYPE
       end
     end
   end
