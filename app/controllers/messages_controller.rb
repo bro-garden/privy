@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
   def create
     raise Messages::ContentBlankError, nil if message_params[:content].blank?
 
-    @message = Message.new(message_params)
+    interface = Interface.web
+    @message = Message.new(message_params, interface:)
     @message.save!
 
     respond_to(&:turbo_stream)
