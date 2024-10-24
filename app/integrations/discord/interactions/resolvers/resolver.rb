@@ -3,10 +3,31 @@ module Discord
     module Resolvers
       class Resolver
         class << self
-          def find(interaction:, **args)
-            return Resolvers::Ping.new(**args) if interaction.ping_type?
+          COMMAND_RESOLVERS = {
+            Resolvers::SayHi::COMMAND_NAME => Resolvers::SayHi
+            # Resolvers::Connect::COMMAND_NAME => Resolvers::Connect,
+          }.freeze
 
-            raise ResolverNotFound, interaction
+          def find(interaction:, **args)
+            if interaction.ping_type?
+              Resolvers::Ping.new(**args)
+            elsif interaction.application_command_type?
+              find_application_command(args)
+            else
+              raise ResolverNotFound, interaction
+            end
+          end
+
+          private
+
+          def find_application_command(args)
+            command_name = args[:request].params.dig('data', 'name')
+            raise CommandBlank if command_name.blank?
+
+            resolver_class = COMMAND_RESOLVERS[command_name]
+            raise CommandNotSupported, command_name unless resolver_class
+
+            resolver_class.new(**args)
           end
         end
 
