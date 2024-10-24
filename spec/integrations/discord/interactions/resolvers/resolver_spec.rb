@@ -48,6 +48,14 @@ RSpec.describe Discord::Interactions::Resolvers::Resolver do
         end
       end
 
+      context 'when command is /connect' do
+        let(:command_name) { 'connect' }
+
+        it 'returns a SayHi resolver instance' do
+          expect(resolver).to be_instance_of(Discord::Interactions::Resolvers::Connect)
+        end
+      end
+
       context 'when command is not supported' do
         let(:command_name) { 'command_not_supported' }
 

@@ -4,8 +4,8 @@ module Discord
       class Resolver
         class << self
           COMMAND_RESOLVERS = {
-            Resolvers::SayHi::COMMAND_NAME => Resolvers::SayHi
-            # Resolvers::Connect::COMMAND_NAME => Resolvers::Connect,
+            SayHi::COMMAND_NAME => SayHi,
+            Connect::COMMAND_NAME => Connect
           }.freeze
 
           def find(interaction:, **args)

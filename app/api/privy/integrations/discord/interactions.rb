@@ -48,7 +48,8 @@ module Privy
         rescue ::Discord::InvalidSignatureHeader, ::Discord::InvalidGlobalName
           status :unauthorized
           { error: 'unauthorized request' }
-        rescue ::Discord::ResolverNotFound, ::Discord::CommandNotSupported, ::Discord::CommandBlank => e
+        rescue ::Discord::ResolverNotFound, ::Discord::CommandNotSupported, ::Discord::CommandBlank,
+               ::Discord::ResolverFail => e
           status :bad_request
           { error: e.message }
         end
