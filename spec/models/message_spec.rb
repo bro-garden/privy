@@ -7,6 +7,7 @@ RSpec.describe Message, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:message_visits).dependent(:destroy) }
+    it { is_expected.to belong_to(:interface) }
   end
 
   describe '#expiration' do

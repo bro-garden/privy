@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_06_171340) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_06_171340) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "interfaces", force: :cascade do |t|
+    t.string "external_id"
+    t.integer "interface_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "message_visits", force: :cascade do |t|
     t.bigint "message_id", null: false
     t.datetime "created_at", null: false
@@ -66,9 +73,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_06_171340) do
     t.integer "expiration_limit", null: false
     t.string "expiration_type", null: false
     t.integer "message_visits_count"
+    t.bigint "interface_id"
+    t.index ["interface_id"], name: "index_messages_on_interface_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "message_visits", "messages"
+  add_foreign_key "messages", "interfaces"
 end

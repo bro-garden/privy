@@ -17,6 +17,8 @@ module Privy
 
       post '', jbuilder: 'messages/create' do
         message_params = declared(params, include_missing: false)[:message]
+        interface = Interface.api
+        message_params.merge!({ interface: })
 
         @message = ::Message.new(message_params)
         @message.save!

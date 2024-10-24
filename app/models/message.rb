@@ -17,6 +17,8 @@ class Message < ApplicationRecord
 
   has_many :message_visits, dependent: :destroy
 
+  belongs_to :interface
+
   has_rich_text :content, encrypted: true
 
   validates :content, presence: true
