@@ -44,7 +44,7 @@ This creates `/connect` command:
 bundle exec rake discord_commands:create_connect
 ```
 
-This creates `/connect` command:
+This creates `/say_hi` command:
 
 ```bash
 bundle exec rake discord_commands:create_say_hi
