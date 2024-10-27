@@ -21,7 +21,7 @@ A group of tasks created for interacting with discord commands cration, indexing
 We can list all existing commands with:
 
 ```bash
-bundle exec rake discord_commands:list_created_commands
+bundle exec rake discord:commands:list
 ```
 
 ### deleting a command
@@ -29,7 +29,7 @@ bundle exec rake discord_commands:list_created_commands
 Knowing the id of a command(`command_id`), we can delete it by running:
 
 ```bash
-bundle exec rake discord_commands:delete_command'[command_id]'
+bundle exec rake discord:commands:delete'[command_id]'
 ```
 
 ### creating privy required commands
@@ -38,14 +38,20 @@ We need to create once, commands into Discord Bot.
 If the command we are creating already exists (by name), the task will fail
 If we updated the command, we should delete it, and then create it again
 
+This creates all commands:
+
+```bash
+bundle exec rake discord:commands:create
+```
+
 This creates `/connect` command:
 
 ```bash
-bundle exec rake discord_commands:create_connect
+bundle exec rake discord:commands:create:connect
 ```
 
 This creates `/say_hi` command:
 
 ```bash
-bundle exec rake discord_commands:create_say_hi
+bundle exec rake discord:commands:create:say_hi
 ```
