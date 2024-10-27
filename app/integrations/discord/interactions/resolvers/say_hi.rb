@@ -10,7 +10,7 @@ module Discord
 
         def execute_action
           @callback = Resources::InteractionCallback.channel_message_with_source
-          @content = "Ey everybody! #{user.username} says hi!!"
+          @content = "Hey everybody! @#{user.username} says hi!!"
         end
       end
     end
