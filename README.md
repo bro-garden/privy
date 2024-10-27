@@ -7,6 +7,7 @@
     - [Installation Prerequisites](#installation-prerequisites)
     - [Setup](#setup)
   - [Tests](#tests)
+  - [Running the application locally](#running-the-application-locally)
   - [Technical Docs Reference](#technical-docs-reference)
     - [Dev Guides \& Tooling](#dev-guides--tooling)
 
@@ -18,10 +19,7 @@
 
 ```bash
 rbenv install 3.1.2
-rbenv local 3.1.2
 ```
-
-PostgreSQL: If you're on a Mac with Apple Silicon, install PostgreSQL by following these steps:
 
 Install Homebrew if you don't have it yet:
 
@@ -29,7 +27,7 @@ Install Homebrew if you don't have it yet:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Install PostgreSQL:
+PostgreSQL: If you're on a Mac with Apple Silicon, install PostgreSQL by following these steps:
 
 ```bash
 brew install postgresql
@@ -39,7 +37,6 @@ Start PostgreSQL:
 
 ```bash
 brew services start postgresql
-Verifica que PostgreSQL esté funcionando:
 ```
 
 Verify that PostgreSQL is running:
@@ -67,6 +64,8 @@ Install the dependencies:
 
 ```bash
 bundle install
+
+npm install -g yarn
 yarn install
 ```
 
@@ -78,13 +77,6 @@ Create the database and load the schema:
 ```bash
 bundle exec rails db:create
 bundle exec rails db:schema:load
-```
-
-**Styles**
-This project uses TailwindCSS for styling. To compile styles in real time, run:
-
-```bash
-bin/rails tailwindcss:watch
 ```
 
 ## Tests
