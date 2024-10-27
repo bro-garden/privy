@@ -12,11 +12,12 @@ module Discord
           registrate_guild
 
           @callback = Resources::InteractionCallback.channel_message_with_source
-          @content = 'Hi @everyone, we have now connected privy'
+          @content = 'Hey @everyone! **privy** is now connected and ready to use. ' \
+                     'Type `/message` to send a secure message in any channel'
         end
 
         def registrate_guild
-          registrar = GuildRegistrar.new(guild)
+          registrar = Services::GuildRegistrar.new(guild)
           registrar.call
         rescue InvalidGuild
           raise ResolverFail, COMMAND_NAME

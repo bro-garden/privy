@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe Discord::GuildRegistrar do
+RSpec.describe Discord::Services::GuildRegistrar do
   subject(:registrar) { described_class.new(guild) }
 
   describe '#call' do
     context 'when there is a valid guild' do
       let(:guild) { create(:guild) }
 
-      it 'returns true' do
-        expect(registrar.call).to be(true)
+      it 'returns Interface' do
+        expect(registrar.call).to be_instance_of(Interface)
       end
 
       it 'sets an Interface to the interface attribute' do
