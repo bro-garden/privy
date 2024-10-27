@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
     t.integer "interface_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["external_id", "interface_type"], name: "index_interfaces_on_external_id_and_interface_type", unique: true
   end
 
   create_table "message_visits", force: :cascade do |t|
