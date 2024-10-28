@@ -17,10 +17,10 @@ module Discord
         end
 
         def registrate_guild
-          registrar = Services::GuildRegistrar.new(guild)
+          registrar = Interfaces::Resolver.new(interface_type: :discord_guild, external_id: guild.id)
           registrar.call
-        rescue InvalidGuild
-          raise ResolverFail, COMMAND_NAME
+        rescue ActiveRecord::RecordInvalid
+          raise DiscordEngine::ResolverFail, COMMAND_NAME
         end
       end
     end

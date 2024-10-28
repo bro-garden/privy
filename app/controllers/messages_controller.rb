@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   def create
     raise Messages::ContentBlankError, nil if message_params[:content].blank?
 
-    interface = Interface.create(interface_type: :web)
+    interface = Interfaces::Resolver.new(interface_type: :web).call
     @message = Message.new(message_params.merge(interface:))
     @message.save!
 
