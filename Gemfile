@@ -94,10 +94,6 @@ gem 'redcarpet', '~> 3.6'
 
 gem 'aws-sdk-s3', '~> 1.160', :require => false
 
-# rbnacl is being used for decryption and encryption in header signature validation
-gem 'rbnacl', '~> 7.1'
-
-# we are using discordrb as discord client
-gem 'discordrb', '~> 3.5'
-
-gem 'discord_engine', path: '../discord-engine'
+source 'https://rubygems.pkg.github.com/bro-garden' do
+  gem 'discord_engine'
+end

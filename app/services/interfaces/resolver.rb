@@ -2,20 +2,20 @@ module Interfaces
   class Resolver
     attr_reader :interface
 
-    def initialize(interface_type:, external_id: nil)
+    def initialize(source:, external_id: nil)
+      @source = source
       @external_id = external_id
-      @interface_type = interface_type
     end
 
-    def create
+    def call
       @interface = Interface.find_or_create_by!(
-        interface_type:,
-        external_id:
+        external_id:,
+        source:
       )
     end
 
     private
 
-    attr_reader :external_id, :interface_type
+    attr_reader :source, :external_id
   end
 end

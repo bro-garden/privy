@@ -54,10 +54,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
 
   create_table "interfaces", force: :cascade do |t|
     t.string "external_id"
-    t.integer "interface_type", null: false
+    t.integer "source", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["external_id", "interface_type"], name: "index_interfaces_on_external_id_and_interface_type", unique: true
+    t.index ["external_id", "source"], name: "index_interfaces_on_external_id_and_source", unique: true
   end
 
   create_table "message_visits", force: :cascade do |t|

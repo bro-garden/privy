@@ -1,30 +1,29 @@
 class Interface < ApplicationRecord
-  enum interface_type: { discord_guild: 0, web: 1, api: 2 }
+  INTERNAL_SOURCES = %i[web api].freeze
+  EXTERNAL_SOURCES = [:discord_guild].freeze
 
-  before_save :ensure_single_instance, if: -> { api? || web? }
+  enum source: { discord_guild: 0, web: 1, api: 2 }
 
   has_many :messages, dependent: :destroy
 
-  validates :interface_type, presence: true
-  validates :external_id, presence: true, if: :requires_external_id?
-  validates :external_id, uniqueness: { scope: :interface_type }, if: :requires_external_id?
+  validates :source, presence: true
+  validates :external_id, presence: true, uniqueness: { scope: :source }, unless: :internal?
+  validate :unique_source, if: :internal?
+
+  scope :api, -> { where(source: :api) }
+  scope :web, -> { where(source: :web) }
 
   private
 
-  def ensure_single_instance
-    existing_interface = Interface.find_by(interface_type:)
+  def unique_source
+    return unless self.class.where(source:).where.not(id:).exists?
 
-    return unless existing_interface
-
-    self.external_id = existing_interface.external_id
-    self.created_at = existing_interface.created_at
-    self.id = existing_interface.id
-
-    # mark it as not new
-    @new_record = false
+    errors.add(:source, 'internal sources must be unique')
   end
 
-  def requires_external_id?
-    !web? && !api?
+  def internal?
+    return false unless source
+
+    INTERNAL_SOURCES.include?(source.to_sym)
   end
 end
