@@ -3,27 +3,13 @@ namespace :discord do
   namespace :commands do
     namespace :create do
       task say_hi: :environment do
-        bot_token = Rails.application.credentials.discord_application.bot_token
-        application_id = Rails.application.credentials.discord_application.id
+        command = DiscordEngine::Commands::SimpleLine.new(name: 'say_hi',
+                                                          description: 'just for fun: it says hi to the user')
+        creation_response = command.create
 
-        command = Discord::Resources::Commands::SimpleLine.new(name: 'say_hi',
-                                                               description: 'just for fun: it says hi to the user')
-
-        response = Discordrb::API.request(
-          :applications_aid_commands,
-          nil,
-          :post,
-          "#{Discordrb::API.api_base}/applications/#{application_id}/commands",
-          command.to_json,
-          Authorization: "Bot #{bot_token}",
-          content_type: :json
-        )
-
-        if response.code == 201
-          puts "Command created! id: #{JSON.parse(response.body)['id']}"
-        else
-          puts "Error: #{response.body}"
-        end
+        puts "Command created! id: #{JSON.parse(creation_response)['id']}"
+      rescue DiscordEngine::CommandCreationFailed => e
+        puts e.message
       end
     end
   end

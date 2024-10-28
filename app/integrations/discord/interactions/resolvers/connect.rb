@@ -1,7 +1,7 @@
 module Discord
   module Interactions
     module Resolvers
-      class Connect < Resolver
+      class Connect < DiscordEngine::Resolvers::Resolver
         attr_reader :callback, :content
 
         COMMAND_NAME = 'connect'.freeze

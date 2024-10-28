@@ -1,7 +1,7 @@
 module Discord
   module Interactions
     module Resolvers
-      class SayHi < Resolver
+      class SayHi < DiscordEngine::Resolvers::Resolver
         attr_reader :callback, :content
 
         COMMAND_NAME = 'say_hi'.freeze

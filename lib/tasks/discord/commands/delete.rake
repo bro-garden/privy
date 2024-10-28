@@ -9,22 +9,11 @@ namespace :discord do
         next
       end
 
-      bot_token = Rails.application.credentials.discord_application.bot_token
-      application_id = Rails.application.credentials.discord_application.id
+      DiscordEngine::Commands::Command.destroy(command_id)
 
-      response = Discordrb::API.request(
-        :applications_aid_commands,
-        nil,
-        :delete,
-        "#{Discordrb::API.api_base}/applications/#{application_id}/commands/#{command_id}",
-        Authorization: "Bot #{bot_token}"
-      )
-
-      if response.code == 204
-        puts "Command with id: #{command_id} deleted!"
-      else
-        puts "Error: #{response.body}"
-      end
+      puts "Command with id: #{command_id} deleted!"
+    rescue DiscordEngine::CommandDestroyingFailed => e
+      puts "Error: #{e.message}"
     end
   end
 end

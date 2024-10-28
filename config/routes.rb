@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   mount Privy::API => '/api'
   root 'messages#new'
 
+  mount DiscordEngine::Engine => '/discord'
+
   resources :messages, only: %i[show new create]
 end

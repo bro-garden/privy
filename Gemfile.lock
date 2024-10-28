@@ -1,3 +1,12 @@
+PATH
+  remote: ../discord-engine
+  specs:
+    discord_engine (0.1.0)
+      discordrb (~> 3.5)
+      jbuilder (~> 2.12)
+      rbnacl (~> 7.1)
+      uuid7 (~> 0.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -146,7 +155,9 @@ GEM
       railties (>= 5.0.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
-    ffi (1.17.0)
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     formatador (1.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -393,6 +404,8 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    uuid7 (0.2.0)
+      zeitwerk (~> 2.4)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -419,6 +432,7 @@ DEPENDENCIES
   bootsnap
   byebug
   capybara
+  discord_engine!
   discordrb (~> 3.5)
   dockerfile-rails (>= 1.6)
   dotenv-rails
@@ -450,7 +464,7 @@ DEPENDENCIES
   web-console
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.3.7

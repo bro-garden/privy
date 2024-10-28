@@ -2,30 +2,18 @@ desc 'Creates /ping command'
 namespace :discord do
   namespace :commands do
     task list: :environment do
-      bot_token = Rails.application.credentials.discord_application.bot_token
-      application_id = Rails.application.credentials.discord_application.id
+      response_body = DiscordEngine::Commands::Command.all
 
-      response = Discordrb::API.request(
-        :applications_aid_commands,
-        nil,
-        :get,
-        "#{Discordrb::API.api_base}/applications/#{application_id}/commands",
-        Authorization: "Bot #{bot_token}",
-        content_type: :json
-      )
+      commands = JSON.parse(response_body)
+      return puts 'there is no commands' if commands.empty?
 
-      if response.code == 200
-        commands = JSON.parse(response.body)
-        return puts 'there is no commands' if commands.empty?
+      puts 'existing commands:'
 
-        puts 'existing commands:'
-
-        commands.each do |command|
-          puts "#{command['id']} type: #{command['type']} name: #{command['name']} description: #{command['description']}"
-        end
-      else
-        puts "Error: #{response.body}"
+      commands.each do |command|
+        puts "#{command['id']} type: #{command['type']} name: #{command['name']} description: #{command['description']}"
       end
+    rescue DiscordEngine::CommandsIndexFailed => e
+      puts e.message
     end
   end
 end
