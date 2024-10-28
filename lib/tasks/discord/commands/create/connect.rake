@@ -14,3 +14,7 @@ namespace :discord do
     end
   end
 end
+
+Rake::Task['discord_engine:commands:create'].enhance do
+  Rake::Task['discord:commands:create:connect'].invoke
+end
