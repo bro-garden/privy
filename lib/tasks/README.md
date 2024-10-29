@@ -2,6 +2,7 @@
 
 - [Rake Tasks](#rake-tasks)
   - [Listing API Endpoints](#listing-api-endpoints)
+  - [Create internal interfaces](#create-internal-interfaces)
   - [Discord Commands Operations](#discord-commands-operations)
 
 ## Listing API Endpoints
@@ -10,6 +11,14 @@ Grape is somewhat unique; if you run `rails routes`, it won’t show the Grape A
 
 ```bash
 bundle exec rake api_routes
+```
+
+## Create internal interfaces
+
+You need to initially set up internal Interfaces, so you need to run:
+
+```bash
+bundle exec rake create_internal_interfaces
 ```
 
 ## Discord Commands Operations
@@ -21,7 +30,7 @@ A group of tasks created for interacting with discord commands cration, indexing
 We can list all existing commands with:
 
 ```bash
-bundle exec rake discord:commands:list
+bundle exec rake discord_engine:commands:list
 ```
 
 ### deleting a command
@@ -29,7 +38,7 @@ bundle exec rake discord:commands:list
 Knowing the id of a command(`command_id`), we can delete it by running:
 
 ```bash
-bundle exec rake discord:commands:delete'[command_id]'
+bundle exec rake discord_engine:commands:delete'[command_id]'
 ```
 
 ### creating privy required commands
@@ -41,7 +50,7 @@ If we updated the command, we should delete it, and then create it again
 This creates all commands:
 
 ```bash
-bundle exec rake discord:commands:create
+bundle exec rake discord_engine:commands:create
 ```
 
 This creates `/connect` command:

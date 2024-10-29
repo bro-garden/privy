@@ -10,8 +10,8 @@ class Interface < ApplicationRecord
   validates :external_id, presence: true, uniqueness: { scope: :source }, unless: :internal?
   validate :unique_source, if: :internal?
 
-  scope :api, -> { where(source: :api) }
-  scope :web, -> { where(source: :web) }
+  scope :api, -> { find_by(source: :api) }
+  scope :web, -> { find_by(source: :web) }
 
   private
 

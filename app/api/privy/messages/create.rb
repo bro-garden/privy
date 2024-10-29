@@ -17,13 +17,11 @@ module Privy
 
       post '', jbuilder: 'messages/create' do
         message_params = declared(params, include_missing: false)[:message]
-        interface = ::Interfaces::Resolver.new(interface_type: :api).call
-        message_params.merge!({ interface: })
-
-        @message = ::Message.new(message_params)
-        @message.save!
-      rescue ActiveRecord::RecordInvalid
-        return error!(@message.errors.full_messages, 422)
+        creator = ::Messages::Creator.new(params: message_params, source: :api)
+        creator.call
+        @message = creator.message
+      rescue ::Messages::CreationFailed => e
+        return error!(e.message, 422)
       end
     end
   end

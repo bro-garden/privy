@@ -4,11 +4,9 @@ class MessagesController < ApplicationController
   end
 
   def create
-    raise Messages::ContentBlankError, nil if message_params[:content].blank?
-
-    interface = Interfaces::Resolver.new(interface_type: :web).call
-    @message = Message.new(message_params.merge(interface:))
-    @message.save!
+    creator = Messages::Creator.new(params: message_params, source: :web)
+    creator.call
+    @message = creator.message
 
     respond_to(&:turbo_stream)
   end

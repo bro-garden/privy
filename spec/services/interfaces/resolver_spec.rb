@@ -4,7 +4,7 @@ RSpec.describe Interfaces::Resolver do
   subject(:interface_resolver) { described_class.new(external_id:, source:) }
 
   describe '#call' do
-    context 'when there is a valid iterface' do
+    context 'when there is a valid interface' do
       let(:external_id) { Faker::Internet.uuid }
       let(:source) { :discord_guild }
 
@@ -13,7 +13,9 @@ RSpec.describe Interfaces::Resolver do
       end
 
       it 'sets an Interface to the interface attribute' do
-        expect { interface_resolver.call }.to change(interface_resolver, :interface).from(nil).to(an_instance_of(Interface))
+        expect do
+          interface_resolver.call
+        end.to change(interface_resolver, :interface).from(nil).to(an_instance_of(Interface))
       end
 
       it 'sets Interface external_id with guild.id' do
