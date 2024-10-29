@@ -15,7 +15,7 @@ module Discord
         private
 
         def registrate_guild
-          registrar = Interfaces::Resolver.new(interface_type: :discord_guild, external_id: guild.id)
+          registrar = Interfaces::Resolver.new(source: :discord_guild, external_id: guild.id)
           registrar.call
         rescue ActiveRecord::RecordInvalid
           raise DiscordEngine::ResolverFail, COMMAND_NAME

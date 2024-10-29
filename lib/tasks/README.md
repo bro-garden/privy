@@ -18,7 +18,7 @@ bundle exec rake api_routes
 You need to initially set up internal Interfaces, so you need to run:
 
 ```bash
-bundle exec rake create_internal_interfaces
+bundle exec rake data:create_internal_interfaces
 ```
 
 ## Discord Commands Operations
