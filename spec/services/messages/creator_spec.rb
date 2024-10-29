@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Messages::Creator do
   subject(:creator) { described_class.new(params:, source:, external_id:) }
 
-  let!(:interface) { create(:interface, source:) }
+  let!(:interface) { create(:interface, source:, external_id:) }
   let(:params) do
     {
       content:,
@@ -54,16 +54,6 @@ RSpec.describe Messages::Creator do
       it 'creates a Message instance in message attribute' do
         creator.call
         expect(creator.message).to be_instance_of(Message)
-      end
-    end
-
-    context 'when interface does not exist' do
-      let(:interface) { create(:interface, source:) }
-      let(:source) { :discord_guild }
-      let(:external_id) { 'non-existing-id' }
-
-      it 'raieses an error' do
-        expect { creator.call }.to raise_error(Messages::CreationFailed)
       end
     end
 

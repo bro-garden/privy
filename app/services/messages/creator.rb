@@ -9,9 +9,8 @@ module Messages
     end
 
     def call
-      interface_resolver = Interfaces::Resolver.new(source:, external_id:)
-      interface_resolver.find_interface
-      params.merge!({ interface: interface_resolver.interface })
+      @interface = Interfaces::Resolver.new(source:, external_id:).call
+      params.merge!({ interface: })
       @message = Message.new(params)
 
       @message.save!
@@ -21,6 +20,6 @@ module Messages
 
     private
 
-    attr_reader :source, :external_id, :params
+    attr_reader :source, :external_id, :params, :interface
   end
 end

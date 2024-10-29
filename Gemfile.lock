@@ -416,7 +416,7 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/bro-garden/
   specs:
-    discord_engine (0.3.0)
+    discord_engine (0.4.0)
       discordrb (~> 3.5)
       jbuilder (~> 2.12)
       rbnacl (~> 7.1)
