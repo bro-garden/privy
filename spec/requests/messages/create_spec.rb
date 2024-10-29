@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Messages API', type: :request do
   let(:params) { { message: { content:, expiration_limit:, expiration_type: } } }
 
+  before { create(:interface, source: :api) }
+
   describe 'POST /api/messages' do
     let(:content) { 'Hello, world!' }
     let(:expiration_type) { 'days' }
