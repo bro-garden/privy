@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.8', '>= 7.0.8.3'
@@ -92,7 +92,8 @@ gem 'dockerfile-rails', '>= 1.6', :group => :development
 
 gem 'redcarpet', '~> 3.6'
 
-gem "aws-sdk-s3", "~> 1.160", :require => false
+gem 'aws-sdk-s3', '~> 1.160', :require => false
 
-# rbnacl is being used for decryption and encryption in header signature validation
-gem "rbnacl", "~> 7.1"
+source 'https://rubygems.pkg.github.com/bro-garden' do
+  gem 'discord_engine'
+end

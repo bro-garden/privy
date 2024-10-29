@@ -3,7 +3,7 @@ RSpec.shared_context 'with mocked validation' do
 
   before do
     allow_any_instance_of(
-      Discord::Interactions::Resolvers::Resolver
+      DiscordEngine::Resolvers::Resolver
     ).to receive(:valid_signature?).and_return(validation_result)
   end
 end

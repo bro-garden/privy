@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Messages API', type: :request do
   describe 'GET /api/messages/:id' do
-    let(:messages) { create_list(:message, 5) }
+    let(:messages) { create_list(:message, 5, interface:) }
+    let!(:interface) { create(:interface, source: :api) }
 
     context 'when the record exists' do
       let(:sample_message) { messages.sample }

@@ -15,10 +15,10 @@
 
 ### Installation Prerequisites
 
-**Ruby 3.1.2**: Use `rbenv` to install and manage the Ruby version:
+**Ruby 3.2.2**: Use `rbenv` to install and manage the Ruby version:
 
 ```bash
-rbenv install 3.1.2
+rbenv install 3.2.2
 ```
 
 Install Homebrew if you don't have it yet:
