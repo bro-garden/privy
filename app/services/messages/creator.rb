@@ -9,8 +9,9 @@ module Messages
     end
 
     def call
-      find_interface
-      params.merge!({ interface: })
+      interface_resolver = Interfaces::Resolver.new(source:, external_id:)
+      interface_resolver.find_interface
+      params.merge!({ interface: interface_resolver.interface })
       @message = Message.new(params)
 
       @message.save!
@@ -20,14 +21,6 @@ module Messages
 
     private
 
-    attr_reader :source, :external_id, :params, :interface
-
-    def find_interface
-      @interface = Interface.api if source == :api
-      @interface = Interface.web if source == :web
-      @interface = Interface.find_by(source:, external_id:) if @interface.blank?
-
-      raise InterfaceNotFound, external_id unless @interface
-    end
+    attr_reader :source, :external_id, :params
   end
 end
