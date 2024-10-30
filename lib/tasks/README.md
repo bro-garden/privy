@@ -64,3 +64,9 @@ This creates `/say_hi` command:
 ```bash
 bundle exec rake discord:commands:create:say_hi
 ```
+
+This creates `/message` command:
+
+```bash
+bundle exec rake discord:commands:create:message
+```

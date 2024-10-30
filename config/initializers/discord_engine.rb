@@ -4,5 +4,6 @@ DiscordEngine.application_id = Rails.application.credentials.discord_application
 
 DiscordEngine.command_resolvers = [
   'Discord::Interactions::Resolvers::SayHi',
-  'Discord::Interactions::Resolvers::Connect'
+  'Discord::Interactions::Resolvers::Connect',
+  'Discord::Interactions::Resolvers::Message'
 ]
