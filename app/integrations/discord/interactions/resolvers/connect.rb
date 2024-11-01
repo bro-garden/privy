@@ -20,6 +20,10 @@ module Discord
         rescue ActiveRecord::RecordInvalid
           raise DiscordEngine::ResolverFail, COMMAND_NAME
         end
+
+        def requires_connection?
+          false
+        end
       end
     end
   end

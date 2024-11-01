@@ -8,6 +8,12 @@ module Discord
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
           @content = "Hey everybody! @#{user.username} says hi!!"
         end
+
+        private
+
+        def requires_connection?
+          true
+        end
       end
     end
   end
