@@ -3,8 +3,8 @@ namespace :discord do
   namespace :commands do
     namespace :create do
       task connect: :environment do
-        command = DiscordEngine::Commands::SimpleLine.new(name: 'connect',
-                                                          description: 'connects privy with discord server')
+        command = DiscordEngine::Commands::ChatInput.new(name: 'connect',
+                                                         description: 'connects privy with discord server')
         creation_response = command.create
 
         puts "Command created! id: #{JSON.parse(creation_response)['id']}"

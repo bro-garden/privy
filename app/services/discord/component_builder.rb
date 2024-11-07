@@ -12,23 +12,23 @@ module Discord
 
     def build_show_button
       @data = { privy_id: message.id }
-      @resolver_class = resolver.class.command_name
+      @resolver_klass = resolver.class.command_name
 
       action_row_buttons = DiscordEngine::MessageComponents::ActionRow.new
-      action_row_buttons.add(component: build_button)
+      action_row_buttons.add(build_button)
 
       @components << action_row_buttons
     end
 
     private
 
-    attr_reader :resolver, :message, :data, :resolver_class
+    attr_reader :resolver, :message, :data, :resolver_klass
 
     def build_button
       DiscordEngine::MessageComponents::Button.new(
         label: 'Reveal',
         style: :success,
-        resolver_class:,
+        resolver_klass:,
         name: REVEAL_BUTTON_NAME,
         data:
       )

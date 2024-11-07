@@ -5,7 +5,7 @@ namespace :discord do
   namespace :commands do
     namespace :create do
       task message: :environment do
-        command = DiscordEngine::Commands::WithOptions.new(
+        command = DiscordEngine::Commands::ChatInput.new(
           name: 'message',
           description: 'Starts an interaction to create a Privy message'
         )
@@ -25,7 +25,7 @@ namespace :discord do
         )
 
         %i[hours days visits].each do |type|
-          command.add_option_choices(option: expiration_type, name: type.to_s, value: type)
+          command.add_option_choice(option: expiration_type, name: type.to_s, value: type)
         end
 
         expiration_limit = command.add_option(
@@ -36,7 +36,7 @@ namespace :discord do
         )
 
         [1, 2, 3, 4, 5].each do |limit|
-          command.add_option_choices(option: expiration_limit, name: limit.to_s, value: limit)
+          command.add_option_choice(option: expiration_limit, name: limit.to_s, value: limit)
         end
 
         creation_response = command.create

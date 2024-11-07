@@ -34,11 +34,10 @@ module Discord
       component_builder = Discord::ComponentBuilder.new(resolver, message)
       component_builder.build_show_button
 
-      DiscordEngine::MessagesClient.create_message(
-        channel_id,
-        PRIVY_MESSAGE_CREATED_CONTENT,
-        component_builder.components
-      )
+      message = DiscordEngine::Message.new(
+        content: PRIVY_MESSAGE_CREATED_CONTENT,
+        components: component_builder.components
+      ).create(channel_id:)
     end
   end
 end
