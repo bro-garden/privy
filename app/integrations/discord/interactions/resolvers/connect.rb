@@ -21,7 +21,7 @@ module Discord
           raise DiscordEngine::ResolverFail, COMMAND_NAME
         end
 
-        def requires_connection?
+        def authorize_guild?
           false
         end
       end
