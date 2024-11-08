@@ -4,7 +4,8 @@ DiscordEngine.application_id = Rails.application.credentials.discord_application
 
 DiscordEngine.resolvers = [
   'Discord::Interactions::Resolvers::SayHi',
-  'Discord::Interactions::Resolvers::Connect'
+  'Discord::Interactions::Resolvers::Connect',
+  'Discord::Interactions::Resolvers::Message'
 ]
 
 DiscordEngine.guild_verification = ->(guild) { ::Interface.discord_guild.find_by(external_id: guild.id).present? }
