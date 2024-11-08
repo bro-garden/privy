@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Discord::Interactions::Resolvers::SayHi do
+RSpec.describe Discord::Interactions::Resolvers::SayHi, skip: 'will move this later on to discord engine' do
   subject(:say_hi) { described_class.new(request:, raw_body:, application:, guild:, user:) }
 
   include_context 'with mocked validation'

@@ -1,5 +1,5 @@
 RSpec.shared_context 'with resolver params' do
-  let(:request) { instance_double('Request', params:, headers:) }
+  let(:request) { instance_double(Request, params:, headers:) }
   let(:raw_body) { 'Some raw body content' }
   let(:application) { build(:discord_application) }
   let(:guild) { build(:discord_guild) }

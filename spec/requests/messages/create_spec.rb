@@ -21,7 +21,7 @@ RSpec.describe 'Messages API', type: :request do
 
       it 'returns a 201 status code' do
         post('/api/messages', params:)
-        expect(response).to have_http_status(201)
+        expect(response).to have_http_status(:created)
       end
 
       it "returns a message's id" do
@@ -40,7 +40,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'returns a 201 status code' do
           post('/api/messages', params:)
-          expect(response).to have_http_status(201)
+          expect(response).to have_http_status(:created)
         end
 
         it "returns a message's id" do
@@ -60,7 +60,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'returns a 422 status code' do
           post('/api/messages', params:)
-          expect(response).to have_http_status(422)
+          expect(response).to have_http_status(:unprocessable_entity)
         end
 
         it 'returns an error message' do
@@ -79,7 +79,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'returns a 400 status code' do
           post('/api/messages', params:)
-          expect(response).to have_http_status(400)
+          expect(response).to have_http_status(:bad_request)
         end
 
         it 'returns an error message' do
@@ -99,7 +99,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it 'returns a 400 status code' do
           post('/api/messages', params:)
-          expect(response).to have_http_status(400)
+          expect(response).to have_http_status(:bad_request)
         end
 
         it 'returns an error message' do
