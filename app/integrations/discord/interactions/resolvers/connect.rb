@@ -20,6 +20,10 @@ module Discord
         rescue ActiveRecord::RecordInvalid
           raise DiscordEngine::ResolverFail, COMMAND_NAME
         end
+
+        def authorize_guild?
+          false
+        end
       end
     end
   end
