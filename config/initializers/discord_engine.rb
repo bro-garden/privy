@@ -7,3 +7,5 @@ DiscordEngine.resolvers = [
   'Discord::Interactions::Resolvers::Connect',
   'Discord::Interactions::Resolvers::Message'
 ]
+
+DiscordEngine.guild_verification = ->(guild) { ::Interface.discord_guild.find_by(external_id: guild.id).present? }
