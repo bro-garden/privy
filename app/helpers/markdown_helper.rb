@@ -9,6 +9,6 @@ module MarkdownHelper
     renderer = HTMLwithPygments.new(filter_html: true, hard_wrap: true)
     markdown = Redcarpet::Markdown.new(renderer,
                                        { fenced_code_blocks: true, autolink: true, tables: true })
-    markdown.render(text).html_safe
+    sanitize(markdown.render(text))
   end
 end
