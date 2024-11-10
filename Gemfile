@@ -58,12 +58,15 @@ gem 'bootsnap', require: false
 gem 'image_processing', '~> 1.2'
 
 group :development, :test do
+  gem 'bundle-audit', '~> 0.1.0'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'brakeman', '~> 6.2'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'guard-rspec'
+  gem 'mdl', '~> 0.13.0'
   gem 'rspec-rails'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
