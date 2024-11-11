@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_11_204109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "discord_engine_external_messages", force: :cascade do |t|
+    t.string "external_id", null: false
+    t.string "channel_id", null: false
+    t.bigint "message_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_discord_engine_external_messages_on_message_id"
+  end
+
   create_table "interfaces", force: :cascade do |t|
     t.string "external_id"
     t.integer "source", null: false
@@ -80,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_24_205753) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "discord_engine_external_messages", "messages"
   add_foreign_key "message_visits", "messages"
   add_foreign_key "messages", "interfaces"
 end

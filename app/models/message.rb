@@ -19,6 +19,10 @@ class Message < ApplicationRecord
 
   belongs_to :interface
 
+  if DiscordEngine.related_external_messages_table.present?
+    has_one :discord_engine_external_message, class_name: 'DiscordEngine::ExternalMessage', dependent: :destroy
+  end
+
   has_rich_text :content, encrypted: true
 
   validates :content, presence: true

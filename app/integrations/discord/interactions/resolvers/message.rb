@@ -11,7 +11,7 @@ module Discord
         def execute_action
           message = create_message
           message_component = create_message_component(message)
-          send_message(message_component)
+          send_message(message_component, message)
 
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
           @content = 'Done, message created'
@@ -44,11 +44,11 @@ module Discord
           action_row
         end
 
-        def send_message(message_component)
+        def send_message(message_component, message)
           DiscordEngine::Message.new(
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
-          ).create(channel_id:)
+          ).create(channel_id:, relate_with: message)
         end
 
         def message_params
