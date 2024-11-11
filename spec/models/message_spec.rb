@@ -40,7 +40,7 @@ RSpec.describe Message, type: :model do
       let(:number_of_visits) { 0 }
 
       it 'returns nil' do
-        expect(message.message_visits_count).to be(nil)
+        expect(message.message_visits_count).to be_nil
       end
     end
 
