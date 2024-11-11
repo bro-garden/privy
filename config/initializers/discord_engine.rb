@@ -3,7 +3,6 @@ DiscordEngine.bot_token = Rails.application.credentials.discord_application.bot_
 DiscordEngine.application_id = Rails.application.credentials.discord_application.id
 
 DiscordEngine.resolvers = [
-  'Discord::Interactions::Resolvers::SayHi',
   'Discord::Interactions::Resolvers::Connect',
   'Discord::Interactions::Resolvers::Message'
 ]
