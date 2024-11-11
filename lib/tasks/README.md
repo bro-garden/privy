@@ -25,33 +25,7 @@ bundle exec rake data:create_internal_interfaces
 
 A group of tasks created for interacting with discord commands cration, indexing and deleting:
 
-### Listing all existing commands
-
-We can list all existing commands with:
-
-```bash
-bundle exec rake discord_engine:commands:list
-```
-
-### deleting a command
-
-Knowing the id of a command(`command_id`), we can delete it by running:
-
-```bash
-bundle exec rake discord_engine:commands:delete'[command_id]'
-```
-
-### creating privy required commands
-
-We need to create once, commands into Discord Bot.
-If the command we are creating already exists (by name), the task will fail
-If we updated the command, we should delete it, and then create it again
-
-This creates all commands:
-
-```bash
-bundle exec rake discord_engine:commands:create
-```
+See the [engine's README](https://github.com/bro-garden/discord-engine/blob/main/lib/tasks/README.md) for more information on how to create a new command, and how to list and delete existing commands.
 
 This creates `/connect` command:
 
