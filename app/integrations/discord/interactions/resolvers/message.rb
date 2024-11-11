@@ -13,8 +13,11 @@ module Discord
           message_component = create_message_component(message)
           send_message(message_component)
 
+          @content = '✅ Message created!'
+        rescue Messages::CreationFailed => e
+          @content = "⚠️ Could not create message: #{e.message}"
+        ensure
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
-          @content = 'Done, message created'
           @flags = DiscordEngine::Message::EPHEMERAL_FLAG
           @components = []
         end
