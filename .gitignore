@@ -39,6 +39,5 @@ coverage/
 .yarn/*
 .env
 
-/config/credentials/development.key
-/config/credentials/test.key
-/config/credentials/production.key
+/config/credentials/*.key
+!/config/credentials/test.key
