@@ -1,0 +1,3 @@
+#!/bin/ruby
+
+rules '~MD013,~MD007'

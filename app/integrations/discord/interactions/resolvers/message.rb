@@ -28,7 +28,7 @@ module Discord
           message_creator = Messages::Creator.new(
             params: message_params,
             source: :discord_guild,
-            external_id: guild.id
+            external_id: context.guild.id
           )
           message_creator.call
           message_creator.message
@@ -51,14 +51,14 @@ module Discord
           DiscordEngine::Message.new(
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
-          ).create(channel_id:)
+          ).create(channel_id: context.channel_id)
         end
 
         def message_params
           {
-            content: option_value('content'),
-            expiration_limit: option_value('expiration_limit'),
-            expiration_type: option_value('expiration_type')
+            content: context.option_value('content'),
+            expiration_limit: context.option_value('expiration_limit'),
+            expiration_type: context.option_value('expiration_type')
           }
         end
       end
