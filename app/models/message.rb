@@ -19,10 +19,6 @@ class Message < ApplicationRecord
 
   belongs_to :interface
 
-  if DiscordEngine.related_external_messages_table.present?
-    has_one :discord_engine_external_message, class_name: 'DiscordEngine::ExternalMessage', dependent: :destroy
-  end
-
   has_rich_text :content, encrypted: true
 
   validates :content, presence: true
@@ -32,6 +28,10 @@ class Message < ApplicationRecord
 
   def expiration
     MessageExpiration.new(expiration_limit, expiration_type)
+  end
+
+  def discord_engine_external_message
+    DiscordEngine::ExternalMessage.find_by(reference_id: id)
   end
 
   private

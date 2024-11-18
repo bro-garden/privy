@@ -8,4 +8,3 @@ DiscordEngine.resolvers = [
 ]
 
 DiscordEngine.guild_verification = ->(guild) { ::Interface.discord_guild.find_by(external_id: guild.id).present? }
-DiscordEngine.related_external_messages_table = 'messages'

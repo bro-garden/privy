@@ -52,4 +52,32 @@ RSpec.describe Message, type: :model do
       end
     end
   end
+
+  describe '#discord_engine_external_message' do
+    let(:message) { create(:message) }
+
+    context 'when message has a discord_engine_external_message' do
+      let!(:discord_engine_external_message) { create(:discord_engine_external_message, reference_id: message.id) }
+
+      it 'returns an instance of DiscordEngine::ExternalMessage' do
+        expect(message.discord_engine_external_message).to be_a(DiscordEngine::ExternalMessage)
+      end
+
+      it 'returns the discord engine external message' do
+        expect(message.discord_engine_external_message).to eq(discord_engine_external_message)
+      end
+    end
+
+    context 'when message does not have a discord_engine_external_message' do
+      let(:another_message) { create(:message) }
+
+      before do
+        create(:discord_engine_external_message, reference_id: another_message.id)
+      end
+
+      it 'returns nil' do
+        expect(message.discord_engine_external_message).to be_nil
+      end
+    end
+  end
 end
