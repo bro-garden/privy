@@ -51,7 +51,7 @@ module Discord
           DiscordEngine::Message.new(
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
-          ).create(channel_id: context.channel_id)
+          ).create_external_message!(channel_id: context.channel_id, reference_id: message.id)
         end
 
         def message_params

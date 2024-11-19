@@ -6,12 +6,12 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
   let(:context) { DiscordEngine::Resolvers::Context.new(params:) }
   let(:params) { load_json('interactions/message.json') }
   let(:interface) { create(:interface, source: :discord_guild, external_id: context.guild.id) }
-  let(:discord_message) { instance_double(DiscordEngine::Message, create: true) }
+  let(:discord_message) { instance_double(DiscordEngine::Message, create_external_message!: true) }
 
   before do
     interface # ensure interface exists
     allow(DiscordEngine::Message).to receive(:new).and_return(discord_message)
-    allow(discord_message).to receive(:create)
+    allow(discord_message).to receive(:create_external_message!)
   end
 
   describe '#execute_action' do
@@ -50,7 +50,7 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       end
 
       it 'sends the message to the channel' do
-        expect(discord_message).to have_received(:create)
+        expect(discord_message).to have_received(:create_external_message!)
       end
 
       it 'creates a message record' do
