@@ -4,20 +4,21 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
   subject(:message_resolver) { described_class.new(context:) }
 
   let(:context) { DiscordEngine::Resolvers::Context.new(params:) }
-  let(:params) { load_json('interactions/message.json') }
   let(:interface) { create(:interface, source: :discord_guild, external_id: context.guild.id) }
-  let(:discord_message) { instance_double(DiscordEngine::Message, create: true) }
 
   before do
     interface # ensure interface exists
-    allow(DiscordEngine::Message).to receive(:new).and_return(discord_message)
-    allow(discord_message).to receive(:create)
+    allow(DiscordEngine::Message).to receive(:new).and_call_original
   end
 
-  describe '#execute_action' do
+  describe '#execute_action', :vcr do
     context 'when message creation succeeds' do
+      let(:params) { load_json('interactions/message.json') }
+
       before do
-        message_resolver.execute_action
+        VCR.use_cassette('resolvers/messages/create_discord_message') do
+          message_resolver.execute_action
+        end
       end
 
       it 'adds a DiscordEngine::InteractionCallback instance to callback attribute' do
@@ -49,10 +50,6 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
           )
       end
 
-      it 'sends the message to the channel' do
-        expect(discord_message).to have_received(:create)
-      end
-
       it 'creates a message record' do
         expect(Message.count).to eq(1)
       end
@@ -72,19 +69,23 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       it 'sets the correct expiration type on the message' do
         expect(Message.last.expiration_type).to eq(context.option_value('expiration_type'))
       end
+
+      it 'creates a DiscordMessage record' do
+        expect(DiscordMessage.count).to eq(1)
+      end
     end
 
     context 'when message creation fails' do
-      let(:messages_creator) { instance_double(Messages::Creator) }
+      let(:params) { load_json('interactions/message_invalid.json') }
 
       before do
-        allow(Messages::Creator).to receive(:new).and_return(messages_creator)
-        allow(messages_creator).to receive(:call).and_raise(Messages::CreationFailed, 'Error message')
-        message_resolver.execute_action
+        VCR.use_cassette('resolvers/messages/create_discord_message_failed') do
+          message_resolver.execute_action
+        end
       end
 
       it 'sets error content' do
-        expect(message_resolver.content).to eq('⚠️ Could not create message: Error message')
+        expect(message_resolver.content).to include('⚠️ Could not create message')
       end
 
       it 'still sets the callback' do
@@ -101,6 +102,10 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
 
       it 'does not create a message in the database' do
         expect(Message.count).to eq(0)
+      end
+
+      it 'does not create a DiscordMessage record' do
+        expect(DiscordMessage.count).to eq(0)
       end
     end
   end

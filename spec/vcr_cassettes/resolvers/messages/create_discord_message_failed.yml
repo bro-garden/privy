@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discord.com/api/v9/channels/1295846289195663363adsadadad/messages
+    body:
+      encoding: UTF-8
+      string: '{"content":"Hey @everyone! here is a new **privy** message","flags":null,"components":[{"type":1,"components":[{"type":2,"label":"Reveal","style":3,"custom_id":"{\"resolver_name\":\"Discord::Interactions::Resolvers::RevealMessage\",\"data\":{\"message_id\":455}}"}]}]}'
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - DiscordBot (https://github.com/shardlab/discordrb, v3.5.0) rest-client/2.1.0
+        ruby/3.2.2p53 discordrb/3.5.0
+      Authorization:
+      - Bot ...
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '268'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - discord.com
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 22 Nov 2024 22:31:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfruid=668752513b7e730b6bde28825795e46a1b941daa-1732314706; path=/; domain=.discord.com;
+        HttpOnly; Secure; SameSite=None
+      - __dcfduid=8ea71968a92111ef9f764661f749e20a; Expires=Wed, 21-Nov-2029 22:31:46
+        GMT; Max-Age=157680000; Secure; HttpOnly; Path=/; SameSite=Lax
+      - __sdcfduid=8ea71968a92111ef9f764661f749e20a5cf7a0880414d9797e806705632c0c5e2a19fc99b49a015e50f1cba6a905e507;
+        Expires=Wed, 21-Nov-2029 22:31:46 GMT; Max-Age=157680000; Secure; HttpOnly;
+        Path=/; SameSite=Lax
+      - _cfuvid=ysBsTYs_BqvBCa11ZuBdjbDwYdkpZKA47Vpb3Dn9bhQ-1732314706418-0.0.1.1-604800000;
+        path=/; domain=.discord.com; HttpOnly; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Bucket:
+      - 3df15bae86f6647dd4dfcbd5c6949480
+      X-Ratelimit-Limit:
+      - '5'
+      X-Ratelimit-Remaining:
+      - '4'
+      X-Ratelimit-Reset:
+      - '1732314707.410'
+      X-Ratelimit-Reset-After:
+      - '1.000'
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=R0xa0cFhw6OTo79DrrFeo9c%2Bu9Y1QKbKnKrffnfqWMtcngBdSxzj3PQvuPj8sYTEYGcXOo0FuQX2gnJEf0vogOufaI5aBJDxLzJBI0bFdxzzdZSVC2rcH1%2BWBH9%2F"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - frame-ancestors 'none'; default-src 'none'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8e6c5f22be615c7b-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"message": "Invalid Form Body", "code": 50035, "errors": {"channel_id":
+        {"_errors": [{"code": "NUMBER_TYPE_COERCE", "message": "Value \"1295846289195663363adsadadad\"
+        is not snowflake."}]}}}'
+  recorded_at: Fri, 22 Nov 2024 22:31:46 GMT
+recorded_with: VCR 6.3.1

@@ -16,6 +16,7 @@ class Message < ApplicationRecord
   after_update :set_updated_at
 
   has_many :message_visits, dependent: :destroy
+  has_one :external_message, dependent: :destroy
 
   belongs_to :interface
 

@@ -11,10 +11,12 @@ module Discord
         def execute_action
           message = create_message
           message_component = create_message_component(message)
-          send_message(message_component)
+          response = send_message(message_component)
+          link_discord_message(message, response['id'])
 
           @content = '✅ Message created!'
-        rescue Messages::CreationFailed => e
+        rescue Messages::CreationFailed, RuntimeError => e
+          message.destroy!
           @content = "⚠️ Could not create message: #{e.message}"
         ensure
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
@@ -52,6 +54,11 @@ module Discord
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
           ).create(channel_id: context.channel_id)
+        end
+
+        def link_discord_message(message, id)
+          discord_message = DiscordMessage.find_by(external_id: id, channel_id: context.channel_id)
+          discord_message.update!(message: message)
         end
 
         def message_params
