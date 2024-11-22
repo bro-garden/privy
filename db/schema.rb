@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_24_205753) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_173016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_205753) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "external_messages", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "external_id", null: false
+    t.string "channel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "message_id"
+    t.index ["channel_id", "external_id"], name: "index_external_messages_on_channel_id_and_external_id", unique: true
+    t.index ["message_id"], name: "index_external_messages_on_message_id"
+  end
+
   create_table "interfaces", force: :cascade do |t|
     t.string "external_id"
     t.integer "source", null: false
@@ -80,6 +91,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_24_205753) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "external_messages", "messages"
   add_foreign_key "message_visits", "messages"
   add_foreign_key "messages", "interfaces"
 end
