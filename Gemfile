@@ -97,6 +97,8 @@ gem 'redcarpet', '~> 3.6'
 
 gem 'aws-sdk-s3', '~> 1.160', require: false
 
+gem 'wisper', '~> 3.0'
+
 source 'https://rubygems.pkg.github.com/bro-garden' do
   gem 'bg_cop'
   gem 'discord_engine'
