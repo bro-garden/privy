@@ -484,6 +484,7 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wisper (3.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.1)
@@ -497,12 +498,13 @@ GEM
       rubocop-rails (~> 2.24)
       rubocop-rspec (~> 3.0)
       rubocop-rspec_rails (~> 2.30)
-    discord_engine (0.8.1)
+    discord_engine (0.9.0)
       discordrb (~> 3.5)
       jbuilder (~> 2.12)
       rails (>= 7.2.2)
       rbnacl (~> 7.1)
       uuid7 (~> 0.2.0)
+      wisper (~> 3.0)
 
 PLATFORMS
   aarch64-linux
