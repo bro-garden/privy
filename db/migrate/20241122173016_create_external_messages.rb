@@ -7,7 +7,7 @@ class CreateExternalMessages < ActiveRecord::Migration[7.2]
 
       t.timestamps
 
-      t.references :message, null: true, foreign_key: true
+      t.references :message, null: false, foreign_key: true
 
       t.index %i[channel_id external_id], unique: true
     end
