@@ -22,4 +22,8 @@ RSpec.shared_examples 'message resolver failed' do
   it 'does not create a DiscordMessage record' do
     expect(DiscordMessage.count).to eq(0)
   end
+
+  it 'still sets the callback' do
+    expect(message_resolver.callback).to be_an_instance_of(DiscordEngine::InteractionCallback)
+  end
 end
