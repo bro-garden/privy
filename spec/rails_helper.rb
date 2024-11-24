@@ -8,7 +8,6 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'support/shoulda_matchers'
-require 'support/capybara'
 require 'simplecov'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
