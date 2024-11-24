@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe DiscordMessages::Creator do
-  subject(:creator) { described_class.new(params: discord_api_response_body, message_id:) }
+  subject(:creator) { described_class.new(params:, message_id:) }
 
   describe '#call' do
-    let(:discord_api_response_body) do
+    let(:params) do
       load_cassette_response('resolvers/messages/create_discord_message')
     end
 
@@ -35,6 +35,15 @@ RSpec.describe DiscordMessages::Creator do
 
       it 'raises an error' do
         expect { creator.call }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when discord message creation fails' do
+      let(:message_id) { create(:message).id }
+      let(:params) { { 'id' => '456' } } # missing 'channel_id' param
+
+      it 'raises a Messages::CreationFailed error' do
+        expect { creator.call }.to raise_error(Messages::CreationFailed)
       end
     end
   end
