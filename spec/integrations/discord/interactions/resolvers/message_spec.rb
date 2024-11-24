@@ -75,39 +75,37 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       end
     end
 
-    describe 'message creation fails' do
-      context 'when bot has no permission to send messages' do
-        let(:message_resource_isntance) { instance_double(DiscordEngine::Message) }
-        let(:expected_resolver_message) do
-          '⚠️ Could not create message: please make sure the bot has permission to send messages on this channel'
-        end
-
-        before do
-          allow(DiscordEngine::Message).to receive(:new).and_return(message_resource_isntance)
-          allow(message_resource_isntance).to receive(:create).and_raise(Discordrb::Errors::NoPermission)
-          message_resolver.execute_action
-        end
-
-        it_behaves_like 'message resolver failed'
+    context 'when bot has no permission to send messages' do
+      let(:message_resource_isntance) { instance_double(DiscordEngine::Message) }
+      let(:expected_resolver_message) do
+        '⚠️ Could not create message: please make sure the bot has permission to send messages on this channel'
       end
 
-      context 'when DiscordMessage creation fails' do
-        let(:discord_messages_creator) { instance_double(DiscordMessages::Creator) }
-        let(:expected_resolver_message) do
-          "⚠️ Could not create message: External can't be blank, Channel can't be blank"
-        end
-
-        before do
-          allow(Discordrb::API).to receive(:request).and_return(instance_double(RestClient::Response, body: '{}'))
-          allow(discord_messages_creator).to receive(:call).and_raise(
-            Messages::CreationFailed,
-            "External can't be blank, Channel can't be blank"
-          )
-          message_resolver.execute_action
-        end
-
-        it_behaves_like 'message resolver failed'
+      before do
+        allow(DiscordEngine::Message).to receive(:new).and_return(message_resource_isntance)
+        allow(message_resource_isntance).to receive(:create).and_raise(Discordrb::Errors::NoPermission)
+        message_resolver.execute_action
       end
+
+      it_behaves_like 'message resolver failed'
+    end
+
+    context 'when DiscordMessage creation fails' do
+      let(:discord_messages_creator) { instance_double(DiscordMessages::Creator) }
+      let(:expected_resolver_message) do
+        "⚠️ Could not create message: External can't be blank, Channel can't be blank"
+      end
+
+      before do
+        allow(Discordrb::API).to receive(:request).and_return(instance_double(RestClient::Response, body: '{}'))
+        allow(discord_messages_creator).to receive(:call).and_raise(
+          Messages::CreationFailed,
+          "External can't be blank, Channel can't be blank"
+        )
+        message_resolver.execute_action
+      end
+
+      it_behaves_like 'message resolver failed'
     end
   end
 end
