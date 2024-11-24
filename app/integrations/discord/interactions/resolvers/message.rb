@@ -16,10 +16,9 @@ module Discord
 
             @content = '✅ Message created!'
           end
-        rescue Discordrb::Errors::Unauthorized => _e
-          @content = '⚠️ Could not create message: check the bot permissions!'
-        rescue Discordrb::Errors::InvalidFormBody => _e
-          @content = '⚠️ Could not create message: Discord is having some issues, please try later'
+        rescue Discordrb::Errors::NoPermission => _e
+          @content = '⚠️ Could not create message: please make sure the bot has' \
+                     ' permission to send messages on this channel'
         rescue Messages::CreationFailed => e
           @content = "⚠️ Could not create message: #{e.message}"
         ensure

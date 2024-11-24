@@ -12,9 +12,9 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
   end
 
   describe '#execute_action', :vcr do
-    context 'when message creation succeeds' do
-      let(:params) { load_json('interactions/message.json') }
+    let(:params) { load_json('interactions/message.json') }
 
+    context 'when message creation succeeds' do
       before do
         VCR.use_cassette('resolvers/messages/create_discord_message') do
           message_resolver.execute_action
@@ -75,37 +75,38 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       end
     end
 
-    context 'when message creation fails' do
-      let(:params) { load_json('interactions/message_invalid.json') }
+    describe 'message creation fails' do
+      context 'when bot has no permission to send messages' do
+        let(:message_resource_isntance) { instance_double(DiscordEngine::Message) }
+        let(:expected_resolver_message) do
+          '⚠️ Could not create message: please make sure the bot has permission to send messages on this channel'
+        end
 
-      before do
-        VCR.use_cassette('resolvers/messages/create_discord_message_failed') do
+        before do
+          allow(DiscordEngine::Message).to receive(:new).and_return(message_resource_isntance)
+          allow(message_resource_isntance).to receive(:create).and_raise(Discordrb::Errors::NoPermission)
           message_resolver.execute_action
         end
+
+        it_behaves_like 'message resolver failed'
       end
 
-      it 'sets error content' do
-        expect(message_resolver.content).to include('⚠️ Could not create message')
-      end
+      context 'when DiscordMessage creation fails' do
+        let(:discord_messages_creator) { instance_double(DiscordMessages::Creator) }
+        let(:expected_resolver_message) do
+          "⚠️ Could not create message: External can't be blank, Channel can't be blank"
+        end
 
-      it 'still sets the callback' do
-        expect(message_resolver.callback).to be_an_instance_of(DiscordEngine::InteractionCallback)
-      end
+        before do
+          allow(Discordrb::API).to receive(:request).and_return(instance_double(RestClient::Response, body: '{}'))
+          allow(discord_messages_creator).to receive(:call).and_raise(
+            Messages::CreationFailed,
+            "External can't be blank, Channel can't be blank"
+          )
+          message_resolver.execute_action
+        end
 
-      it 'sets empty components array' do
-        expect(message_resolver.components).to eq([])
-      end
-
-      it 'sets ephemeral flag' do
-        expect(message_resolver.flags).to eq(DiscordEngine::Message::EPHEMERAL_FLAG)
-      end
-
-      it 'does not create a message in the database' do
-        expect(Message.count).to eq(0)
-      end
-
-      it 'does not create a DiscordMessage record' do
-        expect(DiscordMessage.count).to eq(0)
+        it_behaves_like 'message resolver failed'
       end
     end
   end
