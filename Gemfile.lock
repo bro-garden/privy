@@ -489,7 +489,7 @@ GEM
       rubocop-rails (~> 2.24)
       rubocop-rspec (~> 3.0)
       rubocop-rspec_rails (~> 2.30)
-    discord_engine (0.9.0)
+    discord_engine (0.10.0)
       discordrb (~> 3.5)
       jbuilder (~> 2.12)
       rails (>= 7.2.2)
