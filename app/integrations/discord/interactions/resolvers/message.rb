@@ -9,13 +9,18 @@ module Discord
         REVEAL_MESSAGE_RESOLVER = 'Discord::Interactions::Resolvers::RevealMessage'.freeze
 
         def execute_action
-          message = create_message
-          message_component = create_message_component(message)
-          send_message(message_component, message.id)
+          ActiveRecord::Base.transaction do
+            message = create_message
+            message_component = create_message_component(message)
+            send_message(message_component, message.id)
 
-          @content = '✅ Message created!'
-        rescue Messages::CreationFailed, RuntimeError => e
-          message.destroy!
+            @content = '✅ Message created!'
+          end
+        rescue Discordrb::Errors::Unauthorized => _e
+          @content = '⚠️ Could not create message: check the bot permissions!'
+        rescue Discordrb::Errors::InvalidFormBody => _e
+          @content = '⚠️ Could not create message: Discord is having some issues, please try later'
+        rescue Messages::CreationFailed => e
           @content = "⚠️ Could not create message: #{e.message}"
         ensure
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
