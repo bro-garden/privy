@@ -11,8 +11,7 @@ module Discord
         def execute_action
           message = create_message
           message_component = create_message_component(message)
-          response = send_message(message_component)
-          link_discord_message(message, response['id'])
+          send_message(message_component, message.id)
 
           @content = '✅ Message created!'
         rescue Messages::CreationFailed, RuntimeError => e
@@ -49,16 +48,11 @@ module Discord
           action_row
         end
 
-        def send_message(message_component)
+        def send_message(message_component, reference_id)
           DiscordEngine::Message.new(
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
-          ).create(channel_id: context.channel_id)
-        end
-
-        def link_discord_message(message, id)
-          discord_message = DiscordMessage.find_by(external_id: id, channel_id: context.channel_id)
-          discord_message.update!(message: message)
+          ).create(channel_id: context.channel_id, reference_id:)
         end
 
         def message_params

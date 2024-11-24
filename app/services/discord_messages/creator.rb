@@ -1,21 +1,27 @@
 module DiscordMessages
   class Creator
-    attr_reader :message
+    attr_reader :discord_message
 
-    def initialize(params:)
+    def initialize(params:, message_id:)
       @params = params
+      @message_id = message_id
     end
 
     def call
-      @message = DiscordMessage.new(channel_id: params['channel_id'], external_id: params['id'])
+      message = Message.find(message_id)
+      @discord_message = DiscordMessage.new(
+        channel_id: params['channel_id'],
+        external_id: params['id'],
+        message:
+      )
 
-      @message.save!
+      @discord_message.save!
     rescue ActiveRecord::RecordInvalid => e
       raise CreationFailed, e.record.errors.full_messages.join(', ')
     end
 
     private
 
-    attr_reader :params
+    attr_reader :params, :message_id
   end
 end
