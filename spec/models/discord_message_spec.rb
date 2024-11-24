@@ -30,6 +30,6 @@ RSpec.describe DiscordMessage, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:message).optional }
+    it { is_expected.to belong_to(:message) }
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_22_173016) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_002249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_173016) do
     t.string "channel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "message_id"
+    t.bigint "message_id", null: false
     t.index ["channel_id", "external_id"], name: "index_external_messages_on_channel_id_and_external_id", unique: true
     t.index ["message_id"], name: "index_external_messages_on_message_id"
   end
