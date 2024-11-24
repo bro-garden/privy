@@ -17,7 +17,7 @@ module DiscordMessages
 
       @discord_message.save!
     rescue ActiveRecord::RecordInvalid => e
-      raise CreationFailed, e.record.errors.full_messages.join(', ')
+      raise Messages::CreationFailed, e.record.errors.full_messages.join(', ')
     end
 
     private
