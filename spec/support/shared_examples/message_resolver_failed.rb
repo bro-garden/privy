@@ -23,7 +23,7 @@ RSpec.shared_examples 'message resolver failed' do
     expect(DiscordMessage.count).to eq(0)
   end
 
-  it 'still sets the callback' do
-    expect(message_resolver.callback).to be_an_instance_of(DiscordEngine::InteractionCallback)
+  it 'still sets the callback type' do
+    expect(message_resolver.callback.type).to eq(DiscordEngine::InteractionCallback::CHANNEL_MESSAGE_WITH_SOURCE_TYPE)
   end
 end
