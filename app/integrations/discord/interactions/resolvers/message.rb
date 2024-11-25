@@ -6,7 +6,7 @@ module Discord
 
         MESSAGE_CREATED_CONTENT = 'Hey @everyone! here is a new **privy** message'.freeze
         REVEAL_BUTTON_LABEL = 'Reveal'.freeze
-        REVEAL_MESSAGE_RESOLVER = 'Discord::Interactions::Resolvers::RevealMessage'.freeze
+        REVEAL_MESSAGE_RESOLVER = 'RevealMessage'.freeze
 
         def execute_action
           ActiveRecord::Base.transaction do
@@ -43,7 +43,7 @@ module Discord
           reveal_button = DiscordEngine::MessageComponents::Button.new(
             label: REVEAL_BUTTON_LABEL,
             style: :success,
-            resolver_name: REVEAL_MESSAGE_RESOLVER,
+            resolver_name: REVEAL_MESSAGE_RESOLVER.underscore,
             data: { message_id: message.id }
           )
 
