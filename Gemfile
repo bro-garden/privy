@@ -87,8 +87,8 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem 'dockerfile-rails', '>= 1.6', group: :development
@@ -96,6 +96,8 @@ gem 'dockerfile-rails', '>= 1.6', group: :development
 gem 'redcarpet', '~> 3.6'
 
 gem 'aws-sdk-s3', '~> 1.160', require: false
+
+gem 'wisper', '~> 3.0'
 
 source 'https://rubygems.pkg.github.com/bro-garden' do
   gem 'bg_cop'

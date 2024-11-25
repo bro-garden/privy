@@ -9,11 +9,16 @@ module Discord
         REVEAL_MESSAGE_RESOLVER = 'Discord::Interactions::Resolvers::RevealMessage'.freeze
 
         def execute_action
-          message = create_message
-          message_component = create_message_component(message)
-          send_message(message_component)
+          ActiveRecord::Base.transaction do
+            message = create_message
+            message_component = create_message_component(message)
+            send_message(message_component, message.id)
 
-          @content = '✅ Message created!'
+            @content = '✅ Message created!'
+          end
+        rescue Discordrb::Errors::NoPermission => _e
+          @content = '⚠️ Could not create message: please make sure the bot has' \
+                     ' permission to send messages on this channel'
         rescue Messages::CreationFailed => e
           @content = "⚠️ Could not create message: #{e.message}"
         ensure
@@ -47,11 +52,11 @@ module Discord
           action_row
         end
 
-        def send_message(message_component)
+        def send_message(message_component, reference_id)
           DiscordEngine::Message.new(
             content: MESSAGE_CREATED_CONTENT,
             components: [message_component]
-          ).create(channel_id: context.channel_id)
+          ).create(channel_id: context.channel_id, reference_id:)
         end
 
         def message_params

@@ -1,0 +1,2 @@
+class DiscordMessage < ExternalMessage
+end

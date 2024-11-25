@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discord.com/api/v9/channels/1295846289195663363/messages
+    body:
+      encoding: UTF-8
+      string: '{"content":"Hey @everyone! here is a new **privy** message","flags":null,"components":[{"type":1,"components":[{"type":2,"label":"Reveal","style":3,"custom_id":"{\"resolver_name\":\"Discord::Interactions::Resolvers::RevealMessage\",\"data\":{\"message_id\":305}}"}]}]}'
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - DiscordBot (https://github.com/shardlab/discordrb, v3.5.0) rest-client/2.1.0
+        ruby/3.2.2p53 discordrb/3.5.0
+      Authorization:
+      - Bot ...
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '268'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - discord.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 22 Nov 2024 22:07:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfruid=ec7ba6e67df3a88ef5e92cd60be2cf5a0e96d5a5-1732313235; path=/; domain=.discord.com;
+        HttpOnly; Secure; SameSite=None
+      - __dcfduid=21b22602a91e11ef95d47e4a90bd521a; Expires=Wed, 21-Nov-2029 22:07:15
+        GMT; Max-Age=157680000; Secure; HttpOnly; Path=/; SameSite=Lax
+      - __sdcfduid=21b22602a91e11ef95d47e4a90bd521a2db7891b4585ec912a322bb30e26f1b824a89a98c9d88d3d9edcacae3a7ab137;
+        Expires=Wed, 21-Nov-2029 22:07:15 GMT; Max-Age=157680000; Secure; HttpOnly;
+        Path=/; SameSite=Lax
+      - _cfuvid=ZqQHLNT00yjufZZ58eCVHVvpVeTDQIeAW8twHUdNfdE-1732313235127-0.0.1.1-604800000;
+        path=/; domain=.discord.com; HttpOnly; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Bucket:
+      - 3df15bae86f6647dd4dfcbd5c6949480
+      X-Ratelimit-Limit:
+      - '5'
+      X-Ratelimit-Remaining:
+      - '4'
+      X-Ratelimit-Reset:
+      - '1732313236.073'
+      X-Ratelimit-Reset-After:
+      - '1.000'
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=G4MblS5tL9ipcTKMoxctSRgHGFeUGJfx2GffBd6eHO%2FLLQI%2FSon6EuAU6c30LJZU0wPLRWUriIgz0MQFO4NA0ljk%2FfyxRm5JLAPrzbRflOrq8s0GBe3Tn8sud0Sk"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - frame-ancestors 'none'; default-src 'none'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8e6c3b368c77a570-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"type":0,"content":"Hey @everyone! here is a new **privy** message","mentions":[],"mention_roles":[],"attachments":[],"embeds":[],"timestamp":"2024-11-22T22:07:15.091000+00:00","edited_timestamp":null,"flags":0,"components":[{"type":1,"id":1,"components":[{"type":2,"id":2,"custom_id":"{\"resolver_name\":\"Discord::Interactions::Resolvers::RevealMessage\",\"data\":{\"message_id\":305}}","style":3,"label":"Reveal"}]}],"resolved":{"users":{},"members":{},"channels":{},"roles":{}},"id":"1309641372193656964","channel_id":"1295846289195663363","author":{"id":"1296566140188754081","username":"PRIVY-DEV","avatar":null,"discriminator":"1385","public_flags":524288,"flags":524288,"bot":true,"banner":null,"accent_color":null,"global_name":null,"avatar_decoration_data":null,"banner_color":null,"clan":null,"primary_guild":null},"pinned":false,"mention_everyone":true,"tts":false}
+
+        '
+  recorded_at: Fri, 22 Nov 2024 22:07:15 GMT
+recorded_with: VCR 6.3.1

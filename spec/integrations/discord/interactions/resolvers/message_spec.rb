@@ -4,20 +4,21 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
   subject(:message_resolver) { described_class.new(context:) }
 
   let(:context) { DiscordEngine::Resolvers::Context.new(params:) }
-  let(:params) { load_json('interactions/message.json') }
   let(:interface) { create(:interface, source: :discord_guild, external_id: context.guild.id) }
-  let(:discord_message) { instance_double(DiscordEngine::Message, create: true) }
 
   before do
     interface # ensure interface exists
-    allow(DiscordEngine::Message).to receive(:new).and_return(discord_message)
-    allow(discord_message).to receive(:create)
+    allow(DiscordEngine::Message).to receive(:new).and_call_original
   end
 
-  describe '#execute_action' do
+  describe '#execute_action', :vcr do
+    let(:params) { load_json('interactions/message.json') }
+
     context 'when message creation succeeds' do
       before do
-        message_resolver.execute_action
+        VCR.use_cassette('resolvers/messages/create_discord_message') do
+          message_resolver.execute_action
+        end
       end
 
       it 'adds a DiscordEngine::InteractionCallback instance to callback attribute' do
@@ -49,10 +50,6 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
           )
       end
 
-      it 'sends the message to the channel' do
-        expect(discord_message).to have_received(:create)
-      end
-
       it 'creates a message record' do
         expect(Message.count).to eq(1)
       end
@@ -72,36 +69,43 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       it 'sets the correct expiration type on the message' do
         expect(Message.last.expiration_type).to eq(context.option_value('expiration_type'))
       end
+
+      it 'creates a DiscordMessage record' do
+        expect(DiscordMessage.count).to eq(1)
+      end
     end
 
-    context 'when message creation fails' do
-      let(:messages_creator) { instance_double(Messages::Creator) }
+    context 'when bot has no permission to send messages' do
+      let(:message_resource_isntance) { instance_double(DiscordEngine::Message) }
+      let(:expected_resolver_message) do
+        '⚠️ Could not create message: please make sure the bot has permission to send messages on this channel'
+      end
 
       before do
-        allow(Messages::Creator).to receive(:new).and_return(messages_creator)
-        allow(messages_creator).to receive(:call).and_raise(Messages::CreationFailed, 'Error message')
+        allow(DiscordEngine::Message).to receive(:new).and_return(message_resource_isntance)
+        allow(message_resource_isntance).to receive(:create).and_raise(Discordrb::Errors::NoPermission)
         message_resolver.execute_action
       end
 
-      it 'sets error content' do
-        expect(message_resolver.content).to eq('⚠️ Could not create message: Error message')
+      it_behaves_like 'message resolver failed'
+    end
+
+    context 'when DiscordMessage creation fails' do
+      let(:discord_messages_creator) { instance_double(DiscordMessages::Creator) }
+      let(:expected_resolver_message) do
+        "⚠️ Could not create message: External can't be blank, Channel can't be blank"
       end
 
-      it 'still sets the callback' do
-        expect(message_resolver.callback).to be_an_instance_of(DiscordEngine::InteractionCallback)
+      before do
+        allow(Discordrb::API).to receive(:request).and_return(instance_double(RestClient::Response, body: '{}'))
+        allow(discord_messages_creator).to receive(:call).and_raise(
+          Messages::CreationFailed,
+          "External can't be blank, Channel can't be blank"
+        )
+        message_resolver.execute_action
       end
 
-      it 'sets empty components array' do
-        expect(message_resolver.components).to eq([])
-      end
-
-      it 'sets ephemeral flag' do
-        expect(message_resolver.flags).to eq(DiscordEngine::Message::EPHEMERAL_FLAG)
-      end
-
-      it 'does not create a message in the database' do
-        expect(Message.count).to eq(0)
-      end
+      it_behaves_like 'message resolver failed'
     end
   end
 end

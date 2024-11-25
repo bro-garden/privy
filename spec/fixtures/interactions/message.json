@@ -2,12 +2,12 @@
   "app_permissions": "2248474538528321",
   "application_id": "123456789012345678",
   "authorizing_integration_owners": {
-    "0": "987654321098765432"
+    "0": "1295846289195663360"
   },
   "channel": {
     "flags": 0,
-    "guild_id": "987654321098765432",
-    "id": "111222333444555666",
+    "guild_id": "1295846289195663360",
+    "id": "1295846289195663363",
     "last_message_id": "111222333444555777",
     "name": "privy",
     "nsfw": false,
@@ -18,7 +18,7 @@
     "topic": null,
     "type": 0
   },
-  "channel_id": "111222333444555666",
+  "channel_id": "1295846289195663363",
   "context": 0,
   "data": {
     "id": "111222333444555999",
@@ -52,10 +52,10 @@
       "THREE_DAY_THREAD_ARCHIVE",
       "SOUNDBOARD"
     ],
-    "id": "987654321098765432",
+    "id": "1295846289195663360",
     "locale": "en-US"
   },
-  "guild_id": "987654321098765432",
+  "guild_id": "1295846289195663360",
   "guild_locale": "en-US",
   "id": "111222333444556000",
   "locale": "es-ES",
@@ -97,12 +97,12 @@
     "app_permissions": "2248474538528321",
     "application_id": "123456789012345678",
     "authorizing_integration_owners": {
-      "0": "987654321098765432"
+      "0": "1295846289195663360"
     },
     "channel": {
       "flags": 0,
-      "guild_id": "987654321098765432",
-      "id": "111222333444555666",
+      "guild_id": "1295846289195663360",
+      "id": "1295846289195663363",
       "last_message_id": "111222333444555777",
       "name": "privy",
       "nsfw": false,
@@ -113,7 +113,7 @@
       "topic": null,
       "type": 0
     },
-    "channel_id": "111222333444555666",
+    "channel_id": "1295846289195663363",
     "context": 0,
     "data": {
       "id": "111222333444555999",
@@ -147,10 +147,10 @@
         "THREE_DAY_THREAD_ARCHIVE",
         "SOUNDBOARD"
       ],
-      "id": "987654321098765432",
+      "id": "1295846289195663360",
       "locale": "en-US"
     },
-    "guild_id": "987654321098765432",
+    "guild_id": "1295846289195663360",
     "guild_locale": "en-US",
     "id": "111222333444556000",
     "locale": "es-ES",
