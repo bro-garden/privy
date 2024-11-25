@@ -8,7 +8,6 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
 
   before do
     interface # ensure interface exists
-    allow(DiscordEngine::Message).to receive(:new).and_call_original
   end
 
   describe '#execute_action', :vcr do
@@ -28,22 +27,41 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
         message_resolver.execute_action
       end
 
-      it 'adds a DiscordEngine::InteractionCallback instance to callback attribute' do
-        expect(message_resolver.callback).to be_an_instance_of(DiscordEngine::InteractionCallback)
-      end
-
-      it 'adds a callback of right type' do
-        expect(message_resolver.callback.type)
-          .to be(DiscordEngine::InteractionCallback::UPDATE_MESSAGE_TYPE)
-      end
-
       it 'sets success content' do
         expect(message_resolver.content).to eq(message.content.to_plain_text)
       end
 
-      it 'sets empty components array' do
-        expect(message_resolver.components).to eq([])
+      it_behaves_like 'reval message basics'
+    end
+
+    context 'when message does not exist' do
+      let(:message_id) { 0 }
+
+      before do
+        message_resolver.execute_action
       end
+
+      it 'sets error content' do
+        expect(message_resolver.content).to eq('⚠️ Could not find the message')
+      end
+
+      it_behaves_like 'reval message basics'
+    end
+
+    context 'when message has expired' do
+      let(:message) { create(:message, expiration_limit: 1, expiration_type: 'visit') }
+      let(:message_id) { message.id }
+
+      before do
+        create_list(:message_visit, 1, message:)
+        message_resolver.execute_action
+      end
+
+      it 'sets error content' do
+        expect(message_resolver.content).to eq('⚠️ This message has expired')
+      end
+
+      it_behaves_like 'reval message basics'
     end
   end
 end

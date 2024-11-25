@@ -9,7 +9,7 @@ module Discord
           @content = message_text
         rescue ActiveRecord::RecordNotFound => _e
           @content = '⚠️ Could not find the message'
-        rescue Messages::ExpirationTypeError => _e
+        rescue Messages::ExpiredError => _e
           @content = '⚠️ This message has expired'
         ensure
           @callback = DiscordEngine::InteractionCallback.update_message
