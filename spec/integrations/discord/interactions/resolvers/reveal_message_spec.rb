@@ -13,7 +13,6 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
   describe '#execute_action', :vcr do
     let(:params) do
       read = load_json('interactions/reveal_message.json')
-      # "{\"resolver_name\":\"reveal_message\",\"data\":{\"message_id\":12}}"
       read['data']['custom_id'] = "{\"resolver_name\":\"reveal_message\",\"data\":{\"message_id\":#{message_id}}}"
 
       read
