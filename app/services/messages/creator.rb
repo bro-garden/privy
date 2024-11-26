@@ -13,7 +13,7 @@ module Messages
       params.merge!({ interface: })
       @message = Message.new(params)
 
-      @message.save!
+      save_message!
     rescue ActiveRecord::RecordInvalid => e
       raise CreationFailed, e.record.errors.full_messages.join(', ')
     end
@@ -21,5 +21,12 @@ module Messages
     private
 
     attr_reader :source, :external_id, :params, :interface
+
+    def save_message!
+      message.save!
+      return unless message.expiration.time_based?
+
+      MessageExpirationJob.set(wait: message.expiration.wait).perform_later(message.id)
+    end
   end
 end
