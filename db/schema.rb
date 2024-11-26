@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_22_173016) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_161421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,13 +79,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_173016) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.boolean "read", default: false
+    t.boolean "expired", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "expiration_limit", null: false
     t.string "expiration_type", null: false
     t.integer "message_visits_count"
     t.bigint "interface_id"
+    t.datetime "expired_at"
     t.index ["interface_id"], name: "index_messages_on_interface_id"
   end
 
