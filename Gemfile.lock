@@ -115,7 +115,13 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
+    daemons (1.4.1)
     date (3.4.0)
+    delayed_job (4.1.13)
+      activesupport (>= 3.0, < 9.0)
+    delayed_job_active_record (4.1.11)
+      activerecord (>= 3.0, < 9.0)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.5.1)
     discordrb (3.5.0)
       discordrb-webhooks (~> 3.5.0)
@@ -520,6 +526,8 @@ DEPENDENCIES
   brakeman (~> 6.2)
   bundle-audit (~> 0.1.0)
   byebug
+  daemons (~> 1.4)
+  delayed_job_active_record
   discord_engine!
   dockerfile-rails (>= 1.6)
   dotenv-rails
