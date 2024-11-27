@@ -28,7 +28,7 @@ RSpec.describe Notifications::DiscordNotifier do
     end
   end
 
-  describe '#notify_message_hidden!' do
+  describe '#notify_message_state!' do
     let(:message) { create(:message, expiration_limit:, expiration_type:) }
 
     context 'when message is still available' do
@@ -37,7 +37,7 @@ RSpec.describe Notifications::DiscordNotifier do
       let(:expiration_type) { 'hour' }
 
       before do
-        creator.notify_message_hidden!(resolver_name)
+        creator.notify_message_state!(resolver_name)
       end
 
       it 'calls DiscordEngine::Message#update' do
@@ -57,7 +57,7 @@ RSpec.describe Notifications::DiscordNotifier do
       before do
         allow(Messages::Expirer).to receive(:new).and_return(expirer_isntance)
         create(:message_visit, message:)
-        creator.notify_message_hidden!(resolver_name)
+        creator.notify_message_state!(resolver_name)
       end
 
       it 'calls Messages::Expirer#call' do

@@ -18,8 +18,8 @@ module Notifications
       )
     end
 
-    def notify_message_hidden!(resolver_name)
-      return reset_visibility!(resolver_name) if reset_visibility?
+    def notify_message_state!(resolver_name)
+      return send_message_existence_notification!(resolver_name) if notify_existence?
 
       Messages::Expirer.new(message).call
     end
@@ -35,7 +35,7 @@ module Notifications
       ).update(channel_id:, message_id:)
     end
 
-    def reset_visibility!(resolver_name)
+    def send_message_existence_notification!(resolver_name)
       components = build_non_expired_message_components(resolver_name)
       discord_message = message.external_message
       channel_id = discord_message.channel_id
@@ -51,7 +51,7 @@ module Notifications
       message.message_visits_count.to_i < message.expiration.limit
     end
 
-    def reset_visibility?
+    def notify_existence?
       message.expiration.time_based? || visit_based_visits_unreached?
     end
 

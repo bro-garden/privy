@@ -6,7 +6,7 @@ module DiscordMessages
       @message = Message.find(message_id)
       return if message.expired?
 
-      Notifications::DiscordNotifier.new(message).notify_message_hidden!(resolver_name)
+      Notifications::DiscordNotifier.new(message).notify_message_state!(resolver_name)
     rescue StandardError => e
       Rails.logger.error("Error at DiscordMessages::VisibilityJob: #{e.message}")
     end
