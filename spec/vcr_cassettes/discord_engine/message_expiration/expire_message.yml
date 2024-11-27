@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://discord.com/api/v9/channels/1295855052929630230/messages/1311101897389768804
+    body:
+      encoding: UTF-8
+      string: '{"content":"⚠️ This message has expired","flags":null,"components":[]}'
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - DiscordBot (https://github.com/shardlab/discordrb, v3.5.0) rest-client/2.1.0
+        ruby/3.2.2p53 discordrb/3.5.0
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '74'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - discord.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 27 Nov 2024 18:42:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfruid=6e85b1df0a2f317cb6bee60cf8bb67a996b484bc-1732732931; path=/; domain=.discord.com;
+        HttpOnly; Secure; SameSite=None
+      - __dcfduid=5037bc4cacef11ef8de0aa05478085c9; Expires=Mon, 26-Nov-2029 18:42:11
+        GMT; Max-Age=157680000; Secure; HttpOnly; Path=/; SameSite=Lax
+      - __sdcfduid=5037bc4cacef11ef8de0aa05478085c932ce0de8d0e00ffd18c7a661acf11207173193658ebb1cef56cfff220f003353;
+        Expires=Mon, 26-Nov-2029 18:42:11 GMT; Max-Age=157680000; Secure; HttpOnly;
+        Path=/; SameSite=Lax
+      - _cfuvid=8fT8KtI91ZDF4xnLAd9u6QaGiXyDciNYrtIlZCAjNDk-1732732931489-0.0.1.1-604800000;
+        path=/; domain=.discord.com; HttpOnly; Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Bucket:
+      - 3df15bae86f6647dd4dfcbd5c6949480
+      X-Ratelimit-Limit:
+      - '5'
+      X-Ratelimit-Remaining:
+      - '4'
+      X-Ratelimit-Reset:
+      - '1732732932.415'
+      X-Ratelimit-Reset-After:
+      - '1.000'
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=UQGC3FCl0QpLurM1IF4Lb%2B3XsCUoCluDfuT9RqoCdrMvhBxz%2BwPy2Vp2ltBMBKRFYRa7nr9xwk0gjiXrpB%2BmwUwtnpD%2BZTAKpHhT3LAm6VVeGfbHTZ620l9a7xs3"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - frame-ancestors 'none'; default-src 'none'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8e9441b4ee578e06-MIA
+    body:
+      encoding: ASCII-8BIT
+      string: '{"type":0,"content":"\u26a0\ufe0f This message has expired","mentions":[],"mention_roles":[],"attachments":[],"embeds":[],"timestamp":"2024-11-26T22:50:51.433000+00:00","edited_timestamp":"2024-11-27T18:42:11.464225+00:00","flags":0,"components":[],"id":"1311101897389768804","channel_id":"1295855052929630230","author":{"id":"1296566140188754081","username":"PRIVY-DEV","avatar":null,"discriminator":"1385","public_flags":524288,"flags":524288,"bot":true,"banner":null,"accent_color":null,"global_name":null,"avatar_decoration_data":null,"banner_color":null,"clan":null,"primary_guild":null},"pinned":false,"mention_everyone":false,"tts":false}
+
+        '
+  recorded_at: Wed, 27 Nov 2024 18:42:11 GMT
+recorded_with: VCR 6.3.1

@@ -7,7 +7,7 @@ RSpec.describe Messages::Creator do
   let(:params) do
     {
       content:,
-      expiration_type: :hour,
+      expiration_type:,
       expiration_limit: 1
     }
   end
@@ -15,51 +15,66 @@ RSpec.describe Messages::Creator do
   let(:external_id) { interface.external_id }
 
   describe '#call' do
-    context 'when interface is api' do
-      let(:source) { :api }
+    context 'when expiration is time_based' do
+      let(:expiration_type) { :hour }
 
-      it 'returns true' do
-        expect(creator.call).to be(true)
+      context 'when interface is api' do
+        let(:source) { :api }
+
+        it_behaves_like 'successful time based message creation'
       end
 
-      it 'creates a Message instance in message attribute' do
-        creator.call
-        expect(creator.message).to be_instance_of(Message)
-      end
-    end
+      context 'when interface is web' do
+        let(:source) { :web }
 
-    context 'when interface is web' do
-      let(:source) { :web }
-
-      it 'returns true' do
-        expect(creator.call).to be(true)
+        it_behaves_like 'successful time based message creation'
       end
 
-      it 'creates a Message instance in message attribute' do
-        creator.call
-        expect(creator.message).to be_instance_of(Message)
+      context 'when interface is discord_guild' do
+        let(:source) { :discord_guild }
+
+        it_behaves_like 'successful time based message creation'
       end
     end
 
-    context 'when interface is discord_guild' do
-      let(:source) { :discord_guild }
+    context 'when expiration is visits_based' do
+      let(:expiration_type) { :visit }
 
-      it 'returns true' do
-        expect(creator.call).to be(true)
+      context 'when interface is api' do
+        let(:source) { :api }
+
+        it_behaves_like 'successful visits based message creation'
       end
 
-      it 'creates a Message instance in message attribute' do
-        creator.call
-        expect(creator.message).to be_instance_of(Message)
+      context 'when interface is web' do
+        let(:source) { :web }
+
+        it_behaves_like 'successful visits based message creation'
+      end
+
+      context 'when interface is discord_guild' do
+        let(:source) { :discord_guild }
+
+        it_behaves_like 'successful visits based message creation'
       end
     end
 
     context 'when there is an error with message' do
       let(:source) { :api }
+      let(:expiration_type) { :hour }
       let(:content) { '' }
+      let(:message_expiration_job) { instance_double(Messages::ExpirationJob) }
+
+      before do
+        allow(Messages::ExpirationJob).to receive(:set).and_return(message_expiration_job)
+      end
 
       it 'raieses an error' do
         expect { creator.call }.to raise_error(Messages::CreationFailed)
+      end
+
+      it 'does not enqueue a Messages::ExpirationJob' do
+        expect(Messages::ExpirationJob).not_to have_received(:set)
       end
     end
   end

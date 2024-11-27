@@ -25,7 +25,7 @@ class Message < ApplicationRecord
   validates :content, presence: true
   validates :expiration_limit, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :expiration_type, presence: true
-  validates :read, inclusion: { in: [true, false] }, allow_nil: false
+  validates :expired, inclusion: { in: [true, false] }, allow_nil: false
 
   def expiration
     MessageExpiration.new(expiration_limit, expiration_type)
