@@ -1,19 +1,21 @@
 module Messages
   class Reader
-    def initialize(message)
+    def initialize(message, visibility_time = nil, resolver_name = nil)
       @message = message
+      @visibility_time = visibility_time
+      @resolver_name = resolver_name
     end
 
-    def read_message(visibility_time = nil)
+    def read_message
       check_availability!
       track_visit
-      limit_visibility_time(visibility_time) if visibility_time
+      limit_visibility_time if enqueue_visibility_job?
       read_content
     end
 
     private
 
-    attr_reader :message
+    attr_reader :message, :visibility_time, :resolver_name
 
     def track_visit
       MessageVisit.create(message:)
@@ -48,8 +50,12 @@ module Messages
       message.expiration
     end
 
-    def limit_visibility_time(visibility_time)
-      ManageMessageVisibilityJob.set(wait: visibility_time).perform_later(message.id)
+    def enqueue_visibility_job?
+      visibility_time.present? && resolver_name.present?
+    end
+
+    def limit_visibility_time
+      DiscordMessages::VisibilityJob.set(wait: visibility_time).perform_later(message.id, resolver_name)
     end
   end
 end
