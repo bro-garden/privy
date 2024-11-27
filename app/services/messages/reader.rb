@@ -4,9 +4,10 @@ module Messages
       @message = message
     end
 
-    def read_message
+    def read_message(visibility_time = nil)
       check_availability!
       track_visit
+      limit_visibility_time(visibility_time) if visibility_time
       read_content
     end
 
@@ -45,6 +46,10 @@ module Messages
 
     def expiration
       message.expiration
+    end
+
+    def limit_visibility_time(visibility_time)
+      ManageMessageVisibilityJob.set(wait: visibility_time).perform_later(message.id)
     end
   end
 end

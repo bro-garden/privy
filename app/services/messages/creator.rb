@@ -26,7 +26,7 @@ module Messages
       message.save!
       return unless message.expiration.time_based?
 
-      MessageExpirationJob.set(wait: message.expiration.wait).perform_later(message.id)
+      ExpirationJob.set(wait: message.expiration.wait).perform_later(message.id)
     end
   end
 end

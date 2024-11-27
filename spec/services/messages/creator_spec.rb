@@ -63,18 +63,18 @@ RSpec.describe Messages::Creator do
       let(:source) { :api }
       let(:expiration_type) { :hour }
       let(:content) { '' }
-      let(:message_expiration_job) { instance_double(MessageExpirationJob) }
+      let(:message_expiration_job) { instance_double(Messages::ExpirationJob) }
 
       before do
-        allow(MessageExpirationJob).to receive(:set).and_return(message_expiration_job)
+        allow(Messages::ExpirationJob).to receive(:set).and_return(message_expiration_job)
       end
 
       it 'raieses an error' do
         expect { creator.call }.to raise_error(Messages::CreationFailed)
       end
 
-      it 'does not enqueue a MessageExpirationJob' do
-        expect(MessageExpirationJob).not_to have_received(:set)
+      it 'does not enqueue a Messages::ExpirationJob' do
+        expect(Messages::ExpirationJob).not_to have_received(:set)
       end
     end
   end
