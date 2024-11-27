@@ -108,10 +108,10 @@ rails s
 ```
 
 Start jobs:
+
 ```bash
 rake jobs:work
 ```
-
 
 **to run the web version and/or make changes on it:** In a separate terminal tab, run the TailwindCSS watcher for real-time style compilation:
 
