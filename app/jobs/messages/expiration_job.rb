@@ -3,10 +3,10 @@ module Messages
     queue_as :default
 
     def perform(message_id)
-      @message = Message.find(message_id)
-      Messages::Expirer.new(message).call
+      message = Message.find(message_id)
+      Expirer.new(message).call
     rescue StandardError => e
-      Rails.logger.error("Message with id #{e} not found")
+      Rails.logger.error("Error at Messages::ExpirationJob: #{e.message}")
     end
   end
 end

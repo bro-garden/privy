@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Messages::Expirer do
-  subject(:expirer) { described_class.new(message_id) }
+  subject(:expirer) { described_class.new(message) }
 
   describe '#call' do
-    context 'when message exists' do
-      let(:message) { create(:message, interface: create(:interface, source: 'api')) }
-      let(:message_id) { message.id }
+    let(:message) { create(:message, interface:) }
+
+    context 'when message is form internal interface' do
+      let(:interface) { create(:interface, source: 'api') }
 
       it 'expires message' do
         expect { expirer.call }.to change { message.reload.expired }.from(false).to(true)
@@ -18,8 +19,7 @@ RSpec.describe Messages::Expirer do
     end
 
     context 'when message is from discord_guild' do
-      let(:message) { create(:message, interface: create(:interface, source: 'discord_guild')) }
-      let(:message_id) { message.id }
+      let(:interface) { create(:interface, source: 'discord_guild') }
       let(:discord_messages_notifier) { instance_spy(Notifications::DiscordNotifier) }
 
       before do
@@ -30,14 +30,6 @@ RSpec.describe Messages::Expirer do
 
       it 'notifies message expiration' do
         expect(discord_messages_notifier).to have_received(:notify_message_expiration!)
-      end
-    end
-
-    context 'when message does not exist' do
-      let(:message_id) { 0 }
-
-      it 'raises ActiveRecord::RecordNotFound' do
-        expect { expirer.call }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
