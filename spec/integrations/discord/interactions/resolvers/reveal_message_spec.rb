@@ -21,13 +21,19 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
     context 'when message relevation succeeds' do
       let(:message) { create(:message) }
       let(:message_id) { message.id }
+      let(:dicord_message_visibility_job) { class_spy(DiscordMessages::VisibilityJob) }
 
       before do
+        allow(DiscordMessages::VisibilityJob).to receive(:set).and_return(dicord_message_visibility_job)
         message_resolver.execute_action
       end
 
       it 'sets success content' do
         expect(message_resolver.content).to eq(message.content.to_plain_text)
+      end
+
+      it 'enqueues the visibility job' do
+        expect(dicord_message_visibility_job).to have_received(:perform_later).with(message_id, 'reveal_message').once
       end
 
       it_behaves_like 'reval message basics'
@@ -57,7 +63,7 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
       end
 
       it 'sets error content' do
-        expect(message_resolver.content).to eq('⚠️ This message has expired')
+        expect(message_resolver.content).to eq(Notifications::DiscordNotifier::EXPIRED_MESSAGE)
       end
 
       it_behaves_like 'reval message basics'

@@ -4,13 +4,15 @@ module Discord
       class RevealMessage < DiscordEngine::Resolvers::Resolver
         attr_reader :callback, :content, :components
 
+        REVELATION_TIME = 15.seconds
+
         def execute_action
           message_text = read_message_text!
           @content = message_text
         rescue ActiveRecord::RecordNotFound => _e
           @content = '⚠️ Could not find the message'
         rescue Messages::ExpiredError => _e
-          @content = '⚠️ This message has expired'
+          @content = Notifications::DiscordNotifier::EXPIRED_MESSAGE
         ensure
           @callback = DiscordEngine::InteractionCallback.update_message
           @components = []
@@ -20,8 +22,8 @@ module Discord
 
         def read_message_text!
           message = ::Message.find(message_id)
-
-          reader = Messages::Reader.new(message)
+          resolver_name = self.class.name.demodulize.underscore
+          reader = Messages::Reader.new(message, REVELATION_TIME, resolver_name)
           reader.read_message.to_plain_text
         end
 
