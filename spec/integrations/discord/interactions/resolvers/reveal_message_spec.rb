@@ -58,7 +58,7 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
       end
 
       it 'sets error content' do
-        expect(message_resolver.content).to eq('⚠️ This message has expired')
+        expect(message_resolver.content).to eq(Notifications::DiscordNotifier::EXPIRED_MESSAGE)
       end
 
       it_behaves_like 'reval message basics'

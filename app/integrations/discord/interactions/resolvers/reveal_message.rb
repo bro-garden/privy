@@ -10,7 +10,7 @@ module Discord
         rescue ActiveRecord::RecordNotFound => _e
           @content = '⚠️ Could not find the message'
         rescue Messages::ExpiredError => _e
-          @content = '⚠️ This message has expired'
+          @content = Notifications::DiscordNotifier::EXPIRED_MESSAGE
         ensure
           @callback = DiscordEngine::InteractionCallback.update_message
           @components = []
