@@ -16,7 +16,7 @@ module Notifications
       Messages::Expirer.new(message).call
     end
 
-    def notify_message_created!(resolver_name, channel_id)
+    def notify_message_creation!(resolver_name, channel_id)
       build_message(resolver_name).create(
         channel_id:,
         reference_id: message.id

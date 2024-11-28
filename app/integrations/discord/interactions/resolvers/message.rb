@@ -7,7 +7,7 @@ module Discord
         def execute_action
           ActiveRecord::Base.transaction do
             message = create_message
-            Notifications::DiscordNotifier.new(message).notify_message_created!(
+            Notifications::DiscordNotifier.new(message).notify_message_creation!(
               RevealMessage.to_s.demodulize.underscore,
               context.channel_id
             )
