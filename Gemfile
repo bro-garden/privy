@@ -99,7 +99,11 @@ gem 'aws-sdk-s3', '~> 1.160', require: false
 
 gem 'wisper', '~> 3.0'
 
+gem 'delayed_job_active_record'
+
 source 'https://rubygems.pkg.github.com/bro-garden' do
   gem 'bg_cop'
   gem 'discord_engine'
 end
+
+gem 'daemons', '~> 1.4'

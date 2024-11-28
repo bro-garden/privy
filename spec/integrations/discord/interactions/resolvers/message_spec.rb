@@ -45,7 +45,7 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       it 'creates a message in the channel' do
         expect(DiscordEngine::Message).to have_received(:new)
           .with(
-            content: described_class::MESSAGE_CREATED_CONTENT,
+            content: Notifications::DiscordNotifier::MESSAGE_CREATED_CONTENT,
             components: [kind_of(DiscordEngine::MessageComponents::ActionRow)]
           )
       end

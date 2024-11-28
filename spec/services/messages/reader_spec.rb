@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Messages::Reader do
   subject(:reader) { described_class.new(message) }
 
-  let(:message) { create(:message, content:, expiration_limit:, expiration_type:, read:) }
+  let(:message) { create(:message, content:, expiration_limit:, expiration_type:, expired:) }
   let(:expiration_limit) { 1 }
   let(:content) { 'Hello, World!' }
-  let(:read) { false }
+  let(:expired) { false }
 
   describe '#read_message' do
     context 'when message expiration is time based' do
