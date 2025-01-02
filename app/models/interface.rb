@@ -1,6 +1,7 @@
 class Interface < ApplicationRecord
+  DISCORD_GUILD_SOURCE = :discord_guild
   INTERNAL_SOURCES = %i[web api].freeze
-  EXTERNAL_SOURCES = [:discord_guild].freeze
+  EXTERNAL_SOURCES = [DISCORD_GUILD_SOURCE].freeze
 
   enum source: { discord_guild: 0, web: 1, api: 2 }
 

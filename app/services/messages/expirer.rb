@@ -1,5 +1,7 @@
 module Messages
   class Expirer
+    include Wisper::Publisher
+
     attr_reader :message
 
     def initialize(message)
@@ -8,7 +10,7 @@ module Messages
 
     def call
       expire_message!
-      notify_to_external_interface!
+      broadcast(:privy_message_expired, { message: })
     end
 
     private
@@ -18,11 +20,6 @@ module Messages
         expired: true,
         expired_at: Time.zone.now
       )
-    end
-
-    def notify_to_external_interface!
-      interface = message.interface
-      Notifications::DiscordNotifier.new(message).notify_message_expiration! if interface.source == 'discord_guild'
     end
   end
 end
