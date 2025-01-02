@@ -3,4 +3,5 @@ Rails.application.reloader.to_prepare do
 
   Wisper.subscribe(CreateExternalMessageListener.new)
   Wisper.subscribe(PrivyMessageExpiredListener.new)
+  Wisper.subscribe(MessageReadListener.new)
 end

@@ -1,5 +1,7 @@
 module Messages
   class Reader
+    include Wisper::Publisher
+
     def initialize(message, visibility_time = nil, resolver_name = nil)
       @message = message
       @visibility_time = visibility_time
@@ -9,7 +11,8 @@ module Messages
     def read_message
       check_availability!
       track_visit
-      limit_visibility_time if enqueue_visibility_job?
+      broadcast(:message_read, { message:, visibility_time:, resolver_name: })
+
       read_content
     end
 
@@ -48,14 +51,6 @@ module Messages
 
     def expiration
       message.expiration
-    end
-
-    def enqueue_visibility_job?
-      visibility_time.present? && resolver_name.present?
-    end
-
-    def limit_visibility_time
-      DiscordMessages::VisibilityJob.set(wait: visibility_time).perform_later(message.id, resolver_name)
     end
   end
 end
