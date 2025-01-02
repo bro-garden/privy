@@ -1,18 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe Messages::Reader do
-  subject(:reader) { described_class.new(message) }
+  subject(:reader) { described_class.new(message, visibility_time, resolver_name) }
 
   let(:message) { create(:message, content:, expiration_limit:, expiration_type:, expired:) }
   let(:expiration_limit) { 1 }
   let(:content) { 'Hello, World!' }
   let(:expired) { false }
+  let(:visibility_time) { 1 }
+  let(:resolver_name) { 'reveal_message' }
 
   describe '#read_message' do
     context 'when message expiration is time based' do
       subject(:read_message) { reader.read_message }
 
       let(:expiration_type) { 'day' }
+
+      it 'broadcasts message_read event' do
+        expect { read_message }
+          .to broadcast(:message_read, {
+                          message:,
+                          visibility_time: visibility_time,
+                          resolver_name: resolver_name
+                        })
+      end
 
       context 'when message is expired' do
         before do

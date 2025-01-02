@@ -9,6 +9,7 @@ require 'rspec/rails'
 
 require 'support/shoulda_matchers'
 require 'simplecov'
+require 'wisper/rspec/matchers'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
 
@@ -69,4 +70,5 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+  config.include(Wisper::RSpec::BroadcastMatcher)
 end

@@ -4,9 +4,15 @@ RSpec.describe Messages::Expirer do
   subject(:expirer) { described_class.new(message) }
 
   describe '#call' do
+    let(:interface) { create(:interface, source: 'api') }
     let(:message) { create(:message, interface:) }
 
-    context 'when message is form internal interface' do
+    it 'broadcasts privy_message_expired event' do
+      expect { expirer.call }
+        .to broadcast(:privy_message_expired, { message: })
+    end
+
+    context 'when message is from internal interface' do
       let(:interface) { create(:interface, source: 'api') }
 
       it 'expires message' do

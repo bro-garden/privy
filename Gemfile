@@ -89,6 +89,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'vcr'
   gem 'webmock'
+  gem 'wisper-rspec'
 end
 
 gem 'dockerfile-rails', '>= 1.6', group: :development

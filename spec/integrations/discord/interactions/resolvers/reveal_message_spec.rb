@@ -32,10 +32,6 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
         expect(message_resolver.content).to eq(message.content.to_plain_text)
       end
 
-      it 'enqueues the visibility job' do
-        expect(dicord_message_visibility_job).to have_received(:perform_later).with(message_id, 'reveal_message').once
-      end
-
       it_behaves_like 'reval message basics'
     end
 

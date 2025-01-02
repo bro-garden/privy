@@ -484,6 +484,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     wisper (3.0.0)
+    wisper-rspec (1.1.0)
     zeitwerk (2.7.1)
 
 GEM
@@ -559,6 +560,7 @@ DEPENDENCIES
   web-console
   webmock
   wisper (~> 3.0)
+  wisper-rspec
 
 RUBY VERSION
    ruby 3.2.2p53
