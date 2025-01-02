@@ -21,8 +21,8 @@ class MessageExpiration
     @type = type
   end
 
-  def wait
-    return if visits_based?
+  def wait_time
+    raise 'Only time based expirations have a wait time' unless time_based?
 
     limit.send(type)
   end
