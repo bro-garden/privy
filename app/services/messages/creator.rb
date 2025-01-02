@@ -14,6 +14,7 @@ module Messages
       @message = Message.new(params)
 
       save_message!
+      schedule_expiration
     rescue ActiveRecord::RecordInvalid => e
       raise CreationFailed, e.record.errors.full_messages.join(', ')
     end
@@ -24,9 +25,12 @@ module Messages
 
     def save_message!
       message.save!
+    end
+
+    def schedule_expiration
       return unless message.expiration.time_based?
 
-      ExpirationJob.set(wait: message.expiration.wait).perform_later(message.id)
+      ExpirationJob.set(wait: message.expiration.wait_time).perform_later(message.id)
     end
   end
 end
