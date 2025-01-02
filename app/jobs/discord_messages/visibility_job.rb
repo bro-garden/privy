@@ -3,14 +3,10 @@ module DiscordMessages
     queue_as :urgent
 
     def perform(message_id, resolver_name)
-      @message = Message.find(message_id)
+      message = Message.find(message_id)
       return if message.expired?
 
       Notifications::DiscordNotifier.new(message).notify_message_state!(resolver_name)
     end
-
-    private
-
-    attr_reader :message
   end
 end
