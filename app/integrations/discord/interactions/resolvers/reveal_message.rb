@@ -23,8 +23,8 @@ module Discord
         def read_message_text!
           message = ::Message.find(message_id)
           resolver_name = self.class.name.demodulize.underscore
-          reader = Messages::Reader.new(message, REVELATION_TIME, resolver_name)
-          reader.read_message.to_plain_text
+          reader = Messages::Reader.new(message)
+          reader.read_message({ visibility_time: REVELATION_TIME, resolver_name: }).to_plain_text
         end
 
         def message_id

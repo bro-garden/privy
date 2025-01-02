@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Messages::Reader do
-  subject(:reader) { described_class.new(message, visibility_time, resolver_name) }
+  subject(:reader) { described_class.new(message) }
 
   let(:message) { create(:message, content:, expiration_limit:, expiration_type:, expired:) }
   let(:expiration_limit) { 1 }
@@ -12,7 +12,7 @@ RSpec.describe Messages::Reader do
 
   describe '#read_message' do
     context 'when message expiration is time based' do
-      subject(:read_message) { reader.read_message }
+      subject(:read_message) { reader.read_message({ visibility_time:, resolver_name: }) }
 
       let(:expiration_type) { 'day' }
 
@@ -20,8 +20,8 @@ RSpec.describe Messages::Reader do
         expect { read_message }
           .to broadcast(:message_read, {
                           message:,
-                          visibility_time: visibility_time,
-                          resolver_name: resolver_name
+                          visibility_time:,
+                          resolver_name:
                         })
       end
 

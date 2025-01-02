@@ -2,23 +2,21 @@ module Messages
   class Reader
     include Wisper::Publisher
 
-    def initialize(message, visibility_time = nil, resolver_name = nil)
+    def initialize(message)
       @message = message
-      @visibility_time = visibility_time
-      @resolver_name = resolver_name
     end
 
-    def read_message
+    def read_message(payload = {})
       check_availability!
       track_visit
-      broadcast(:message_read, { message:, visibility_time:, resolver_name: })
+      broadcast(:message_read, payload.merge(message:)) if payload.present?
 
       read_content
     end
 
     private
 
-    attr_reader :message, :visibility_time, :resolver_name
+    attr_reader :message
 
     def track_visit
       MessageVisit.create(message:)
