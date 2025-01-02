@@ -3,6 +3,31 @@ require 'rails_helper'
 RSpec.describe Message, type: :model do
   describe 'validations' do
     it { is_expected.to validate_numericality_of(:expiration_limit).only_integer.is_greater_than(0) }
+    it { is_expected.to validate_presence_of(:expiration_type) }
+    it { is_expected.to validate_presence_of(:content) }
+
+    describe '`expired` validation' do
+      it 'is invalid when expired is nil' do
+        message = build(:message, expired: nil)
+        expect(message).not_to be_valid
+      end
+
+      it 'returns the correct error message' do
+        message = build(:message, expired: nil)
+        message.valid?
+        expect(message.errors[:expired]).to include('is not included in the list')
+      end
+
+      it 'is valid when expired is true' do
+        message = build(:message, expired: true)
+        expect(message).to be_valid
+      end
+
+      it 'is valid when expired is false' do
+        message = build(:message, expired: false)
+        expect(message).to be_valid
+      end
+    end
   end
 
   describe 'associations' do
