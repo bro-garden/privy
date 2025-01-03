@@ -4,6 +4,7 @@
   - [Setup Your Discord Dashboard](#setup-your-discord-dashboard)
   - [Connect To Your Local Deploy](#connect-to-your-local-deploy)
   - [Status Notices](#status-notices)
+
 ## Discord
 
 ### Setup Your Discord Dashboard

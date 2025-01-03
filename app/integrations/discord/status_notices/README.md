@@ -11,16 +11,19 @@ These notices help maintain privacy by replacing sensitive content and provide c
 ## Types of Notices
 
 ### Available Notice
+
 - Used when a message needs to be hidden after its revelation time
 - Replaces the original message content with a "Message Hidden" notice
 
 ### Expired Notice
+
 - Used when a message has been read and should be expired
 - Replaces the original message with an "Expired" notice
 
 ## Implementation
 
 Status notices are implemented as separate classes that:
-1. Take a message object in their constructor
-2. Build the appropriate notice content
-3. Then you can use `update` or `create` to send the notice to Discord, depending on whether the message already exists in Discord.
+
+- Take a message object in their constructor
+- Build the appropriate notice content
+- Then you can use `update` or `create` to send the notice to Discord, depending on whether the message already exists in Discord.
