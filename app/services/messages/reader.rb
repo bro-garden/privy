@@ -10,7 +10,7 @@ module Messages
       check_availability!
       track_visit!
       message.reload
-      broadcast(:message_read, { message: })
+      broadcast(:privy_message_read, { message: })
 
       read_content
     end
