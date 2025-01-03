@@ -13,7 +13,7 @@ gem 'sprockets-rails'
 gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 6.0'
 
 gem 'grape'
 
@@ -86,10 +86,12 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # A gem providing "time travel", "time freezing", and "time acceleration" capabilities, making it simple to test time-dependent code
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
+
+  # RSpec matchers and stubbing for Wisp
   gem 'wisper-rspec'
 end
 
@@ -106,4 +108,5 @@ source 'https://rubygems.pkg.github.com/bro-garden' do
   gem 'discord_engine'
 end
 
+# Database based asynchronous priority queue system
 gem 'delayed_job_active_record'
