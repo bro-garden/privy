@@ -22,7 +22,7 @@ class MessageExpiration
   end
 
   def wait_time
-    raise 'Only time based expirations have a wait time' unless time_based?
+    raise Messages::WaitTimeOnlyExpirationType unless time_based?
 
     limit.send(type)
   end

@@ -9,7 +9,6 @@ module Messages
     def read_message
       check_availability!
       track_visit!
-      message.reload
       broadcast(:privy_message_read, { message: })
 
       read_content
