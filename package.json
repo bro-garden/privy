@@ -3,7 +3,7 @@
     "@rails/actiontext": "^7.2.100",
     "simplemde": "^1.11.2",
     "stimulus": "^3.2.2",
-    "trix": "^2.1.5"
+    "trix": "^2.1.12"
   },
   "packageManager": "yarn@1.22.22"
 }
