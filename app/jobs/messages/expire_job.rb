@@ -1,5 +1,5 @@
 module Messages
-  class ExpirationJob < ApplicationJob
+  class ExpireJob < ApplicationJob
     queue_as :default
 
     def perform(message_id)

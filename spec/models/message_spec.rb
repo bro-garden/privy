@@ -77,4 +77,81 @@ RSpec.describe Message, type: :model do
       end
     end
   end
+
+  describe '#available?' do
+    let(:interface) { create(:interface) }
+
+    context 'with time-based expiration' do
+      context 'when message has not expired' do
+        let(:message) { create(:message, interface: interface, expiration_limit: 1, expiration_type: :day) }
+
+        it 'returns true' do
+          expect(message).to be_available
+        end
+
+        context 'when checking just before expiration' do
+          it 'returns true' do
+            Timecop.freeze(message.created_at + 23.hours + 59.minutes) do
+              expect(message).to be_available
+            end
+          end
+        end
+      end
+
+      context 'when message has expired' do
+        let(:message) { create(:message, interface: interface, expiration_limit: 1, expiration_type: :hour) }
+
+        it 'returns false' do
+          Timecop.freeze(message.created_at + 2.hours) do
+            expect(message).not_to be_available
+          end
+        end
+      end
+    end
+
+    context 'with visit-based expiration' do
+      context 'when message has not reached visit limit' do
+        let(:message) { create(:message, interface: interface, expiration_limit: 2, expiration_type: :visits) }
+
+        it 'returns true with no visits' do
+          expect(message).to be_available
+        end
+
+        context 'with one visit' do
+          before do
+            create(:message_visit, message: message)
+          end
+
+          it 'returns true with visits under limit' do
+            expect(message.reload).to be_available
+          end
+        end
+      end
+
+      context 'when message has reached visit limit' do
+        let(:message) { create(:message, interface: interface, expiration_limit: 1, expiration_type: :visit) }
+
+        before do
+          create(:message_visit, message: message)
+        end
+
+        it 'returns false' do
+          expect(message.reload).not_to be_available
+        end
+      end
+    end
+
+    context 'with invalid expiration type' do
+      let(:message) { create(:message, interface: interface, expiration_limit: 1, expiration_type: :day) }
+
+      before do
+        expiration_double = instance_double(MessageExpiration, time_based?: false, visits_based?: false)
+        allow(MessageExpiration).to receive(:new).and_return(expiration_double)
+      end
+
+      it 'raises an error for invalid expiration type' do
+        expect { message.available? }.to raise_error(Messages::ExpirationTypeError)
+      end
+    end
+  end
 end

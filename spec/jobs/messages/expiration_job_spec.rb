@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Messages::ExpirationJob, type: :job do
+RSpec.describe Messages::ExpireJob, type: :job do
   after do
     clear_enqueued_jobs
     clear_performed_jobs

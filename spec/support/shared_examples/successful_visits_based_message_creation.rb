@@ -8,7 +8,7 @@ RSpec.shared_examples 'successful visits based message creation' do
     expect(creator.message).to be_instance_of(Message)
   end
 
-  it 'does not enqueue a Messages::ExpirationJob' do
-    expect { creator.call }.not_to have_enqueued_job(Messages::ExpirationJob)
+  it 'does not enqueue a Messages::ExpireJob' do
+    expect { creator.call }.not_to have_enqueued_job(Messages::ExpireJob)
   end
 end

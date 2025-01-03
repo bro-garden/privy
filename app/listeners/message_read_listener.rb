@@ -1,18 +1,26 @@
 class MessageReadListener
-  VISIBILITY_JOB_MAP = {
-    Interface::DISCORD_GUILD_SOURCE => DiscordMessages::VisibilityJob
+  HIDE_JOBS = {
+    Interface::DISCORD_GUILD_SOURCE => DiscordMessages::HideJob
   }.freeze
 
   def message_read(payload)
     message = payload[:message]
-    visibility_time = payload[:visibility_time]
-    resolver_name = payload[:resolver_name]
     interface = message.interface
-    return unless visibility_time.present? && resolver_name.present?
+    return enqueue_expire_job(interface, message) unless message.available?
 
-    job = VISIBILITY_JOB_MAP[interface.source.to_sym]
+    enqueue_hide_job(interface, message)
+  end
+
+  private
+
+  def enqueue_expire_job(message)
+    Messages::ExpireJob.perform_later(message.id)
+  end
+
+  def enqueue_hide_job(interface, message)
+    job = HIDE_JOBS[interface.source.to_sym]
     return unless job
 
-    job.set(wait: visibility_time).perform_later(message.id, resolver_name)
+    job.set(wait: job::REVELATION_TIME).perform_later(message.id)
   end
 end

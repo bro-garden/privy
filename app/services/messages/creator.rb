@@ -30,7 +30,7 @@ module Messages
     def schedule_expiration
       return unless message.expiration.time_based?
 
-      ExpirationJob.set(wait: message.expiration.wait_time).perform_later(message.id)
+      ExpireJob.set(wait: message.expiration.wait_time).perform_later(message.id)
     end
   end
 end

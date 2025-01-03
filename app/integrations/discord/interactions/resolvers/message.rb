@@ -2,27 +2,22 @@ module Discord
   module Interactions
     module Resolvers
       class Message < DiscordEngine::Resolvers::Resolver
-        attr_reader :callback, :components, :content, :flags
+        attr_reader :callback, :notice, :flags
 
         def execute_action
           ActiveRecord::Base.transaction do
             message = create_message
-            Notifications::DiscordNotifier.new(message).notify_message_creation!(
-              RevealMessage.to_s.demodulize.underscore,
-              context.channel_id
-            )
+            create_available_notice(message)
 
-            @content = '✅ Message created!'
+            @notice = StatusNotices::Created.new.build
           end
         rescue Discordrb::Errors::NoPermission => _e
-          @content = '⚠️ Could not create message: please make sure the bot has' \
-                     ' permission to send messages on this channel'
+          @notice = StatusNotices::Unauthorized.new.build
         rescue Messages::CreationFailed => e
-          @content = "⚠️ Could not create message: #{e.message}"
+          @notice = StatusNotices::CreationFailed.new(e.message).build
         ensure
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
           @flags = DiscordEngine::Message::EPHEMERAL_FLAG
-          @components = []
         end
 
         private
@@ -43,6 +38,14 @@ module Discord
             expiration_limit: context.option_value('expiration_limit'),
             expiration_type: context.option_value('expiration_type')
           }
+        end
+
+        def create_available_notice(message)
+          available_notice = StatusNotices::Available.new(message).build
+          available_notice.create(
+            channel_id: context.channel_id,
+            reference_id: message.id
+          )
         end
       end
     end
