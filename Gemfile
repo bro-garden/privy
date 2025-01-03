@@ -86,7 +86,8 @@ group :development do
 end
 
 group :test do
-  # A gem providing "time travel", "time freezing", and "time acceleration" capabilities, making it simple to test time-dependent code
+  # A gem providing "time travel", "time freezing", and "time acceleration"
+  # capabilities, making it simple to test time-dependent code
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
