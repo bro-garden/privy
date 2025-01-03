@@ -110,3 +110,7 @@ end
 gem 'daemons', '~> 1.4'
 
 gem 'delayed_job_active_record'
+
+# Update these gems to their secure versions
+gem 'actionpack', '~> 7.2.2.1' # Fixes CVE-2024-54133
+gem 'rails-html-sanitizer', '>= 1.6.1' # Fixes multiple CVEs (53985-53989)
