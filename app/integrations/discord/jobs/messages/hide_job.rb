@@ -12,8 +12,8 @@ module Discord
 
           notice = StatusNotices::Available.new(message).build
           notice.update(
-            channel_id: message.discord_message.channel_id,
-            message_id: message.discord_message.external_id
+            channel_id: message.external_message.channel_id,
+            message_id: message.external_message.external_id
           )
         end
       end

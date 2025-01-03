@@ -31,23 +31,15 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
       end
 
       it 'sets success content' do
-        expect(message_resolver.content).to eq('✅ Message created!')
+        expect(message_resolver.notice.content).to eq(Discord::StatusNotices::Created::CONTENT)
       end
 
       it 'sets empty components array' do
-        expect(message_resolver.components).to eq([])
+        expect(message_resolver.notice.components).to eq([])
       end
 
       it 'sets ephemeral flag' do
         expect(message_resolver.flags).to eq(DiscordEngine::Message::EPHEMERAL_FLAG)
-      end
-
-      it 'creates a message in the channel' do
-        expect(DiscordEngine::Message).to have_received(:new)
-          .with(
-            content: Notifications::DiscordNotifier::MESSAGE_CREATED_CONTENT,
-            components: [kind_of(DiscordEngine::MessageComponents::ActionRow)]
-          )
       end
 
       it 'creates a message record' do
@@ -77,13 +69,14 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
 
     context 'when bot has no permission to send messages' do
       let(:message_resource_isntance) { instance_double(DiscordEngine::Message) }
-      let(:expected_resolver_message) do
-        '⚠️ Could not create message: please make sure the bot has permission to send messages on this channel'
-      end
+      let(:expected_resolver_message) { Discord::StatusNotices::Unauthorized::CONTENT }
+      let(:notice) { instance_double(DiscordEngine::Message, content: expected_resolver_message, components: []) }
+      let(:status_notice) { instance_double(Discord::StatusNotices::Unauthorized, build: notice) }
 
       before do
         allow(DiscordEngine::Message).to receive(:new).and_return(message_resource_isntance)
         allow(message_resource_isntance).to receive(:create).and_raise(Discordrb::Errors::NoPermission)
+        allow(Discord::StatusNotices::Unauthorized).to receive(:new).and_return(status_notice)
         message_resolver.execute_action
       end
 
@@ -92,9 +85,7 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
 
     context 'when DiscordMessage creation fails' do
       let(:discord_messages_creator) { instance_double(DiscordMessages::Creator) }
-      let(:expected_resolver_message) do
-        "⚠️ Could not create message: External can't be blank, Channel can't be blank"
-      end
+      let(:expected_resolver_message) { "⚠️ Could not create message: External can't be blank, Channel can't be blank" }
 
       before do
         allow(Discordrb::API).to receive(:request).and_return(instance_double(RestClient::Response, body: '{}'))

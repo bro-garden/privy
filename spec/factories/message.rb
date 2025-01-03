@@ -6,5 +6,10 @@ FactoryBot.define do
     expired { false }
 
     association :interface
+
+    trait :from_discord do
+      interface { create(:interface, :from_discord) }
+      external_message { create(:discord_message) }
+    end
   end
 end

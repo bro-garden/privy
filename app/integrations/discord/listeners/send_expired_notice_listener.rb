@@ -14,8 +14,8 @@ module Discord
       def create_discord_notice(message)
         notice = Discord::StatusNotices::Expired.new.build
         notice.update(
-          channel_id: message.discord_message.channel_id,
-          message_id: message.discord_message.external_id
+          channel_id: message.external_message.channel_id,
+          message_id: message.external_message.external_id
         )
       end
     end

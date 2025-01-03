@@ -23,20 +23,5 @@ RSpec.describe Messages::Expirer do
         expect { expirer.call }.to change { message.reload.expired_at }.from(nil)
       end
     end
-
-    context 'when message is from discord_guild' do
-      let(:interface) { create(:interface, source: 'discord_guild') }
-      let(:discord_messages_notifier) { instance_spy(Notifications::DiscordNotifier) }
-
-      before do
-        create(:discord_message, message:)
-        allow(Notifications::DiscordNotifier).to receive(:new).and_return(discord_messages_notifier)
-        expirer.call
-      end
-
-      it 'notifies message expiration' do
-        expect(discord_messages_notifier).to have_received(:notify_message_expiration!)
-      end
-    end
   end
 end

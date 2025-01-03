@@ -9,6 +9,6 @@ RSpec.shared_examples 'reval message basics' do
   end
 
   it 'sets empty components array' do
-    expect(message_resolver.components).to eq([])
+    expect(message_resolver.notice.components).to eq([])
   end
 end
