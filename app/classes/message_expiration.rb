@@ -21,6 +21,12 @@ class MessageExpiration
     @type = type
   end
 
+  def wait_time
+    raise Messages::WaitTimeOnlyExpirationType unless time_based?
+
+    limit.send(type)
+  end
+
   def time_based?
     TIME_BASED_TYPES.include?(type)
   end

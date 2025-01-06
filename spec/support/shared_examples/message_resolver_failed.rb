@@ -1,6 +1,6 @@
 RSpec.shared_examples 'message resolver failed' do
   it 'sets error content' do
-    expect(message_resolver.content).to eq(expected_resolver_message)
+    expect(message_resolver.notice.content).to eq(expected_resolver_message)
   end
 
   it 'still sets the callback' do
@@ -8,7 +8,7 @@ RSpec.shared_examples 'message resolver failed' do
   end
 
   it 'sets empty components array' do
-    expect(message_resolver.components).to eq([])
+    expect(message_resolver.notice.components).to eq([])
   end
 
   it 'sets ephemeral flag' do

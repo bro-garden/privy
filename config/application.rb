@@ -26,5 +26,7 @@ module Privy
     config.active_record.encryption.primary_key = active_record_encryption.primary_key
     config.active_record.encryption.deterministic_key = active_record_encryption.deterministic_key
     config.active_record.encryption.key_derivation_salt = active_record_encryption.key_derivation_salt
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

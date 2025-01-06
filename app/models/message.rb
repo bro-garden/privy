@@ -25,10 +25,17 @@ class Message < ApplicationRecord
   validates :content, presence: true
   validates :expiration_limit, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :expiration_type, presence: true
-  validates :read, inclusion: { in: [true, false] }, allow_nil: false
+  validates :expired, inclusion: { in: [true, false] }, allow_nil: false
 
   def expiration
     MessageExpiration.new(expiration_limit, expiration_type)
+  end
+
+  def available?
+    return time_based_available? if expiration.time_based?
+    return visit_based_available? if expiration.visits_based?
+
+    raise Messages::ExpirationTypeError, self
   end
 
   private
@@ -41,5 +48,19 @@ class Message < ApplicationRecord
 
   def set_updated_at
     self.updated_at = Time.current.utc
+  end
+
+  def time_based_available?
+    current_time = Time.current.utc
+    expires_at = created_at + expiration.limit.public_send(expiration.type)
+    return true if current_time <= expires_at
+
+    false
+  end
+
+  def visit_based_available?
+    return true if message_visits_count.to_i < expiration.limit
+
+    false
   end
 end

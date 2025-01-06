@@ -3,16 +3,28 @@ require 'rails_helper'
 RSpec.describe Messages::Reader do
   subject(:reader) { described_class.new(message) }
 
-  let(:message) { create(:message, content:, expiration_limit:, expiration_type:, read:) }
+  let(:message) { create(:message, :from_discord, content:, expiration_limit:, expiration_type:, expired:) }
   let(:expiration_limit) { 1 }
   let(:content) { 'Hello, World!' }
-  let(:read) { false }
+  let(:expired) { false }
+  let(:visibility_time) { 1 }
+  let(:resolver_name) { 'reveal_message' }
+  let(:discord_engine_message) { instance_double(DiscordEngine::Message, content:, components: [], update: true) }
+
+  before do
+    allow(DiscordEngine::Message).to receive(:new).and_return(discord_engine_message)
+  end
 
   describe '#read_message' do
     context 'when message expiration is time based' do
       subject(:read_message) { reader.read_message }
 
       let(:expiration_type) { 'day' }
+
+      it 'broadcasts message_read event' do
+        expect { read_message }
+          .to broadcast(:privy_message_read, { message: })
+      end
 
       context 'when message is expired' do
         before do

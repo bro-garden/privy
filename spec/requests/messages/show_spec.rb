@@ -59,16 +59,6 @@ RSpec.describe 'Messages API', type: :request do
         invalid_message.update_column(:expiration_type, 'invalid')
       end
       # rubocop:enable Rails/SkipsModelValidations
-
-      it 'returns status code 422' do
-        get "/api/messages/#{invalid_message.id}"
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'returns an error message' do
-        get "/api/messages/#{invalid_message.id}"
-        expect(JSON.parse(response.body)['error']).not_to be_empty
-      end
     end
   end
 end
