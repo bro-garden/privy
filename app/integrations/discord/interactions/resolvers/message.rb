@@ -5,19 +5,21 @@ module Discord
         attr_reader :callback, :notice, :flags
 
         def execute_action
+          @flags = DiscordEngine::Message::EPHEMERAL_FLAG
+
           ActiveRecord::Base.transaction do
             message = create_message
             create_available_notice(message)
 
             @notice = StatusNotices::Created.new.build
+          rescue Discordrb::Errors::NoPermission => _e
+            @notice = StatusNotices::Unauthorized.new(message).build
+            @flags = nil
           end
-        rescue Discordrb::Errors::NoPermission => _e
-          @notice = StatusNotices::Unauthorized.new.build
         rescue Messages::CreationFailed => e
           @notice = StatusNotices::CreationFailed.new(e.message).build
         ensure
           @callback = DiscordEngine::InteractionCallback.channel_message_with_source
-          @flags = DiscordEngine::Message::EPHEMERAL_FLAG
         end
 
         private
