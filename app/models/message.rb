@@ -1,4 +1,6 @@
 class Message < ApplicationRecord
+  include Uuidable
+
   enum expiration_type: {
     hour: '0',
     hours: '1',

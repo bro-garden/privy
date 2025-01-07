@@ -111,3 +111,5 @@ end
 
 # Database based asynchronous priority queue system
 gem 'delayed_job_active_record'
+
+gem 'uuid7', '~> 0.2.0'
