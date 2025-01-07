@@ -28,5 +28,7 @@ module Privy
     config.active_record.encryption.key_derivation_salt = active_record_encryption.key_derivation_salt
 
     config.active_job.queue_adapter = :delayed_job
+
+    Rails.application.routes.default_url_options[:host] = Rails.application.credentials.web_interface.url
   end
 end

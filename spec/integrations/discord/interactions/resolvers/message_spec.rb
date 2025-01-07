@@ -80,7 +80,17 @@ RSpec.describe Discord::Interactions::Resolvers::Message do
         message_resolver.execute_action
       end
 
-      it_behaves_like 'message resolver failed'
+      it 'sets success content' do
+        expect(message_resolver.notice.content).to eq(Discord::StatusNotices::Unauthorized::CONTENT)
+      end
+
+      it 'sets flag to nil' do
+        expect(message_resolver.flags).to be_nil
+      end
+
+      it 'sets empty components array' do
+        expect(message_resolver.notice.components).to eq([])
+      end
     end
 
     context 'when DiscordMessage creation fails' do
