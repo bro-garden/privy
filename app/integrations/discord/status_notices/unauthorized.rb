@@ -15,7 +15,7 @@ module Discord
 
       def build
         DiscordEngine::Message.new(
-          content: format(CONTENT, message_url: message_url(message)),
+          content: format(CONTENT, message_url: message_url(uuid: message.uuid)),
           components: []
         )
       end

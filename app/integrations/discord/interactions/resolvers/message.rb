@@ -31,6 +31,7 @@ module Discord
             external_id: context.guild.id
           )
           message_creator.call
+
           message_creator.message
         end
 
@@ -46,7 +47,7 @@ module Discord
           available_notice = StatusNotices::Available.new(message).build
           available_notice.create(
             channel_id: context.channel_id,
-            reference_id: message.id
+            reference_id: message.uuid
           )
         end
       end
