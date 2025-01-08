@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_162326) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_211042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_162326) do
     t.integer "message_visits_count"
     t.bigint "interface_id"
     t.datetime "expired_at"
+    t.string "uuid"
     t.index ["interface_id"], name: "index_messages_on_interface_id"
   end
 

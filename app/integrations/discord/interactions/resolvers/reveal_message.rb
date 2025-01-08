@@ -18,13 +18,13 @@ module Discord
         private
 
         def read_message_text!
-          message = ::Message.find(message_id)
+          message = ::Message.find_by!(uuid: message_uuid)
           reader = Messages::Reader.new(message)
           reader.read_message.to_plain_text
         end
 
-        def message_id
-          @message_id ||= context.metadata.dig(:data, 'message_id')
+        def message_uuid
+          @message_uuid ||= context.metadata.dig(:data, 'message_uuid')
         end
       end
     end

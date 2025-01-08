@@ -26,7 +26,7 @@ RSpec.describe 'Messages API', type: :request do
 
       it "returns a message's id" do
         post('/api/messages', params:)
-        expect(JSON.parse(response.body)['id']).to be_present
+        expect(JSON.parse(response.body)['uuid']).to be_present
       end
 
       context 'when there are extra parameter' do
@@ -45,7 +45,7 @@ RSpec.describe 'Messages API', type: :request do
 
         it "returns a message's id" do
           post('/api/messages', params:)
-          expect(JSON.parse(response.body)['id']).to be_present
+          expect(JSON.parse(response.body)['uuid']).to be_present
         end
       end
     end

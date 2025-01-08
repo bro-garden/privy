@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Messages API', type: :request do
-  describe 'GET /api/messages/:id' do
+  describe 'GET /api/messages/:uuid' do
     let(:messages) { create_list(:message, 5, interface:) }
     let!(:interface) { create(:interface, source: :api) }
 
@@ -9,12 +9,12 @@ RSpec.describe 'Messages API', type: :request do
       let(:sample_message) { messages.sample }
 
       it 'returns ok status' do
-        get "/api/messages/#{sample_message.id}"
+        get "/api/messages/#{sample_message.uuid}"
         expect(response).to have_http_status(:ok)
       end
 
       it "returns the message's content" do
-        get "/api/messages/#{sample_message.id}"
+        get "/api/messages/#{sample_message.uuid}"
         expect(JSON.parse(response.body)['message']['content']).not_to be_empty
       end
     end
@@ -41,12 +41,12 @@ RSpec.describe 'Messages API', type: :request do
       end
 
       it 'returns status code 401' do
-        get "/api/messages/#{expired_message.id}"
+        get "/api/messages/#{expired_message.uuid}"
         expect(response).to have_http_status(:unauthorized)
       end
 
       it 'returns an error message' do
-        get "/api/messages/#{expired_message.id}"
+        get "/api/messages/#{expired_message.uuid}"
         expect(JSON.parse(response.body)['error']).not_to be_empty
       end
     end
