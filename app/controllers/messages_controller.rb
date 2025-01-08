@@ -22,6 +22,6 @@ class MessagesController < ApplicationController
   end
 
   def message
-    @message ||= Message.find(params[:id])
+    @message ||= Message.find_by!(uuid: params[:uuid])
   end
 end

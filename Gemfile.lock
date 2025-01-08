@@ -563,6 +563,7 @@ DEPENDENCIES
   timecop
   turbo-rails
   tzinfo-data
+  uuid7 (~> 0.2.0)
   vcr
   web-console
   webmock

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Message, type: :model do
   describe 'validations' do
+    subject { build(:message) }
+
     it { is_expected.to validate_numericality_of(:expiration_limit).only_integer.is_greater_than(0) }
     it { is_expected.to validate_presence_of(:expiration_type) }
     it { is_expected.to validate_presence_of(:content) }

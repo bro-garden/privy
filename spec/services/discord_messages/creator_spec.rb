@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DiscordMessages::Creator do
-  subject(:creator) { described_class.new(params:, message_id:) }
+  subject(:creator) { described_class.new(params:, message_uuid:) }
 
   describe '#call' do
     let(:params) do
@@ -9,7 +9,7 @@ RSpec.describe DiscordMessages::Creator do
     end
 
     context 'when message exists' do
-      let(:message_id) { create(:message).id }
+      let(:message_uuid) { create(:message).uuid }
 
       it 'creates a discord message' do
         expect { creator.call }.to change(DiscordMessage, :count).by(1)
@@ -26,12 +26,12 @@ RSpec.describe DiscordMessages::Creator do
 
       it 'adds the discord message to the message' do
         creator.call
-        expect(Message.find(message_id).external_message).to eq(creator.discord_message)
+        expect(Message.find_by!(uuid: message_uuid).external_message).to eq(creator.discord_message)
       end
     end
 
     context 'when message does not exist' do
-      let(:message_id) { 0 }
+      let(:message_uuid) { 0 }
 
       it 'raises an error' do
         expect { creator.call }.to raise_error(ActiveRecord::RecordNotFound)
@@ -39,7 +39,7 @@ RSpec.describe DiscordMessages::Creator do
     end
 
     context 'when discord message creation fails' do
-      let(:message_id) { create(:message).id }
+      let(:message_uuid) { create(:message).uuid }
       let(:params) { { 'id' => '456' } } # missing 'channel_id' param
 
       it 'raises a Messages::CreationFailed error' do

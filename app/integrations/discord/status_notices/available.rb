@@ -24,7 +24,7 @@ module Discord
           label: REVEAL_BUTTON_LABEL,
           style: :success,
           resolver_name:,
-          data: { message_id: message.id }
+          data: { message_uuid: message.uuid }
         )
 
         action_row = DiscordEngine::MessageComponents::ActionRow.new
