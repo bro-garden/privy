@@ -13,14 +13,14 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
   describe '#execute_action', :vcr do
     let(:params) do
       read = load_json('interactions/reveal_message.json')
-      read['data']['custom_id'] = "{\"resolver_name\":\"reveal_message\",\"data\":{\"message_id\":#{message_id}}}"
+      read['data']['custom_id'] = "{\"resolver_name\":\"reveal_message\",\"data\":{\"message_uuid\":\"#{uuid}\"}}"
 
       read
     end
 
     context 'when message relevation succeeds' do
       let(:message) { create(:message) }
-      let(:message_id) { message.id }
+      let(:uuid) { message.uuid }
       let(:dicord_message_visibility_job) { class_spy(Discord::Jobs::Messages::HideJob) }
 
       before do
@@ -36,7 +36,7 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
     end
 
     context 'when message does not exist' do
-      let(:message_id) { 0 }
+      let(:uuid) { '0' }
 
       before do
         message_resolver.execute_action
@@ -51,7 +51,7 @@ RSpec.describe Discord::Interactions::Resolvers::RevealMessage do
 
     context 'when message has expired' do
       let(:message) { create(:message, expiration_limit: 1, expiration_type: 'visit') }
-      let(:message_id) { message.id }
+      let(:uuid) { message.uuid }
 
       before do
         create_list(:message_visit, 1, message:)
