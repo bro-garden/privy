@@ -13,17 +13,17 @@ class Interface < ApplicationRecord
   scope :api, -> { find_by(source: :api) }
   scope :web, -> { find_by(source: :web) }
 
+  def internal?
+    return false unless source
+
+    INTERNAL_SOURCES.include?(source.to_sym)
+  end
+
   private
 
   def unique_source
     return unless self.class.where(source:).where.not(id:).exists?
 
     errors.add(:source, 'internal sources must be unique')
-  end
-
-  def internal?
-    return false unless source
-
-    INTERNAL_SOURCES.include?(source.to_sym)
   end
 end
