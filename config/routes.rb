@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   mount DiscordEngine::Engine => '/discord'
 
-  resources :messages, only: %i[show new create]
+  resources :messages, only: %i[show new create], param: :uuid
 end
