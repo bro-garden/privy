@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_211042) do
     t.integer "message_visits_count"
     t.bigint "interface_id"
     t.datetime "expired_at"
-    t.uuid "uuid"
+    t.string "uuid"
     t.index ["interface_id"], name: "index_messages_on_interface_id"
   end
 
