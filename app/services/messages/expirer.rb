@@ -18,7 +18,8 @@ module Messages
     def expire_message!
       message.update!(
         expired: true,
-        expired_at: Time.zone.now
+        expired_at: Time.zone.now,
+        content: nil
       )
     end
   end

@@ -24,7 +24,7 @@ class Message < ApplicationRecord
 
   has_rich_text :content, encrypted: true
 
-  validates :content, presence: true
+  validates :content, presence: true, unless: :expired
   validates :expiration_limit, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :expiration_type, presence: true
   validates :expired, inclusion: { in: [true, false] }, allow_nil: false

@@ -22,6 +22,10 @@ RSpec.describe Messages::Expirer do
       it 'adds expired_at timestamp' do
         expect { expirer.call }.to change { message.reload.expired_at }.from(nil)
       end
+
+      it 'clears content' do
+        expect { expirer.call }.to change { message.reload.content.body }.from(message.content.body).to(nil)
+      end
     end
   end
 end
