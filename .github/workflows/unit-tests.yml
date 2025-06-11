@@ -72,7 +72,7 @@ jobs:
       # - name: Generate Swagger Documentation
       #   run: bundle exec rake app:rswag:specs:swaggerize
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v6
         id: auto-commit-action
         with:
           skip_fetch: false
