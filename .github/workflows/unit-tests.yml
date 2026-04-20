@@ -48,7 +48,7 @@ jobs:
           ruby-version: 3.2.2
 
       - name: Cache Ruby bundle
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
